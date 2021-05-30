@@ -1,3 +1,9 @@
+# Backups
+*.bak*
+
+# Locks
+*.lck
+
 # Logs
 logs
 *.log
