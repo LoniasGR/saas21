@@ -1,14 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import Navigation from "./Navigation";
+import Navigation from './Navigation';
 
-function Header () {
-
-    return (
-        <header>
-            <Navigation />
-        </header>
-    )
+function Header() {
+  return (
+    <header>
+      <Navigation
+        userName="Leonidas"
+        loggedIn="true"
+      />
+    </header>
+  );
 }
 
-export default Header
+export default Header;
