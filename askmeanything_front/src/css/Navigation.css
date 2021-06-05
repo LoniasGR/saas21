@@ -13,7 +13,7 @@ li {
     float: left;
 }
 
-li a {
+a {
     display: block;
     color: white;
     text-align: center;
@@ -31,4 +31,11 @@ li a:hover {
 }
 .pos_right {
     float: right;
+}
+
+.usr_welcome {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
 }
