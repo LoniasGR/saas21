@@ -1,6 +1,12 @@
 # WebStorm configs
 .idea/
 
+# VSCode folder
+/.vscode/
+
+# Database folder
+/db/
+
 # Backups
 *.bak*
 
