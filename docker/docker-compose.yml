@@ -15,4 +15,12 @@ services:
         environment: 
             PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
             PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}" 
+    userprofile:
+        build: 
+            context: ../user-profile
+            dockerfile: Dockerfile.userprofile
+        environment: 
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_HOST: "db"
+
 

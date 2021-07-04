@@ -5,9 +5,11 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const usersRouter = require('./routes/users');
+const testDB = require('./database/index');
 
 const app = express();
 
+testDB();
 app.use(morgan('dev', { stream: process.stderr }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
