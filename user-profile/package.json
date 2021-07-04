@@ -14,7 +14,6 @@
     "morgan": "~1.9.1",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",
-    "pug": "2.0.0-beta11",
     "sequelize": "^6.6.4"
   },
   "devDependencies": {
