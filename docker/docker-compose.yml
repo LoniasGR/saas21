@@ -17,8 +17,11 @@ services:
             PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}" 
     userprofile:
         build: 
+            # Context path is relative to docker-compose file (I guess)
             context: ../user-profile
-            dockerfile: Dockerfile.userprofile
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.userProfile
+        restart: always
         environment: 
             DB_PASS: "${POSTGRES_PASSWORD}"
             DB_HOST: "db"
