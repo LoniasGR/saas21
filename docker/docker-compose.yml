@@ -23,6 +23,16 @@ services:
             PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
             PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
      
+    redis:
+        build:
+            context: .
+            dockerfile: Dockerfile.redis
+        container_name: redis
+        restart: always
+        volumes:
+            - ../redis:/data
+
+
     userprofile:
         build: 
             # Context path is relative to docker-compose file (I guess)
@@ -32,6 +42,7 @@ services:
         container_name: micro_user_prof
         depends_on: 
             - db
+            - redis
         restart: always
         environment: 
             DB_PASS: "${POSTGRES_PASSWORD}"

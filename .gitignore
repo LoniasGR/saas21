@@ -2,10 +2,13 @@
 .idea/
 
 # VSCode folder
-/.vscode/
+.vscode/
 
 # Database folder
-/db/
+db/
+
+# Redis data
+redis/
 
 # Backups
 *.bak*
