@@ -1,26 +1,37 @@
 version: "3.9"
 services:
     db:
-        image: postgres
+        build:
+            context: ../database
+            dockerfile: ../docker/Dockerfile.pg 
+        container_name: database
         restart: always
         volumes: 
             - ../db:/var/lib/postgresql/data
         environment: 
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    
     pgadmin: 
         image: dpage/pgadmin4
+        container_name: pgadmin
         restart: always 
+        depends_on: 
+            - db
         ports:
             - "5050:80"
         environment: 
             PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
-            PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}" 
+            PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+     
     userprofile:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../user-profile
             # Dockerfile path is relative to link
             dockerfile: ../docker/Dockerfile.userProfile
+        container_name: micro_user_prof
+        depends_on: 
+            - db
         restart: always
         environment: 
             DB_PASS: "${POSTGRES_PASSWORD}"
