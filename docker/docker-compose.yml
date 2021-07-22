@@ -32,6 +32,25 @@ services:
         volumes:
             - ../redis:/data
 
+    authentication:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../authentication
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.authentication
+        container_name: ms_auth
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports:
+            - "5000:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_HOST: "db" 
+            DB_NAME: "auth"
+            REDIS_HOST: "redis"    
 
     userprofile:
         build: 
@@ -39,13 +58,14 @@ services:
             context: ../user-profile
             # Dockerfile path is relative to link
             dockerfile: ../docker/Dockerfile.userProfile
-        container_name: micro_user_prof
+        container_name: ms_user_profile
         depends_on: 
             - db
             - redis
         restart: always
         environment: 
             DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "user_profile"
             DB_HOST: "db"
 
 
