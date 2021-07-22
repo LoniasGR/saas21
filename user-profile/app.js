@@ -1,38 +1,44 @@
-const createError = require( 'http-errors' );
-const express = require( 'express' );
-const path = require( 'path' );
-const cookieParser = require( 'cookie-parser' );
-const morgan = require( 'morgan' );
+const express = require('express');
+const morgan = require('morgan');
 
-const usersRouter = require( './routes/users' );
-const { testDB } = require( './database/index' );
-
+/**
+ * -------------- GENERAL SETUP ----------------
+*/
+// Create the Express application
 const app = express();
 
-testDB();
-app.use( morgan( 'dev', { stream: process.stderr } ) );
-app.use( express.json() );
-app.use( express.urlencoded( { extended: false } ) );
-app.use( cookieParser() );
+// Configures the database and opens a global connection that can be used in any module
+const { checkTables } = require('./config/database');
 
-app.use( '/users', usersRouter );
+// Must first load the models
+require('./models/User');
+require('./models/UserQuestion');
+require('./models/UserAnswer');
 
-// catch 404 and forward to error handler
-app.use( ( req, res, next ) =>
-{
-  next( createError( 404 ) );
-} );
+checkTables();
 
-// error handler
-app.use( ( err, req, res, next ) =>
-{
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get( 'env' ) === 'development' ? err : {};
+// Set up Redis
+const { UserSubscriber } = require('./config/redis');
+require('./models/UserSubscriber');
 
-  // render the error page
-  res.status( err.status || 500 );
-  res.render( 'error' );
-} );
+UserSubscriber.subscribe('Users');
 
-module.exports = app;
+// Instead of using body-parser middleware, use the new Express implementation of the same thing
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(morgan('dev'));
+
+/**
+ * -------------- ROUTES ----------------
+ */
+
+// Imports all of the routes from ./routes/index.js
+app.use(require('./routes'));
+
+/**
+ * -------------- SERVER ----------------
+ */
+
+// Server listens on http://localhost:3000
+app.listen(3000);
