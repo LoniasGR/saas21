@@ -1,36 +1,38 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
+const createError = require( 'http-errors' );
+const express = require( 'express' );
+const path = require( 'path' );
+const cookieParser = require( 'cookie-parser' );
+const morgan = require( 'morgan' );
 
-const usersRouter = require('./routes/users');
-const testDB = require('./database/index');
+const usersRouter = require( './routes/users' );
+const { testDB } = require( './database/index' );
 
 const app = express();
 
 testDB();
-app.use(morgan('dev', { stream: process.stderr }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use( morgan( 'dev', { stream: process.stderr } ) );
+app.use( express.json() );
+app.use( express.urlencoded( { extended: false } ) );
+app.use( cookieParser() );
 
-app.use('/users', usersRouter);
+app.use( '/users', usersRouter );
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
+app.use( ( req, res, next ) =>
+{
+  next( createError( 404 ) );
+} );
 
 // error handler
-app.use((err, req, res, next) => {
+app.use( ( err, req, res, next ) =>
+{
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get( 'env' ) === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+  res.status( err.status || 500 );
+  res.render( 'error' );
+} );
 
 module.exports = app;
