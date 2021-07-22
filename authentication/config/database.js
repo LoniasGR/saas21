@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 /**
  * -------------- DATABASE ----------------
  */
+
 let sequelize;
 if (process.env.NODE_ENV === 'development') {
   sequelize = new Sequelize({
@@ -26,9 +27,15 @@ if (process.env.NODE_ENV === 'development') {
 
 try {
   sequelize.authenticate();
-  console.log('Connection has been established successfully.');
+  console.debug('Connection has been established successfully.');
 } catch (error) {
   console.error('Unable to connect to the database:', error);
 }
 
-module.exports = sequelize;
+async function checkTables() {
+  await sequelize.sync();
+  console.debug('All models are synchronized.');
+}
+
+module.exports.sequelize = sequelize;
+module.exports.checkTables = checkTables;

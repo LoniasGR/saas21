@@ -3,9 +3,11 @@ const jsonwebtoken = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 
+const { User } = require('../models/User');
+
 const pathToPrivKey = path.join(__dirname, '..', 'id_rsa_priv.pem');
 const PRIV_KEY = fs.readFileSync(pathToPrivKey, 'utf8');
-const pathToPubKey = path.join(__dirname, '..', 'id_rsa_priv.pem');
+const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
 
 /**
@@ -41,16 +43,32 @@ function genPassword(password) {
 }
 
 /**
+ *
+ * @param {*} username - The username of the registering user.
+ *
+ * This function takes a username and returns a boolean if already
+ * found in the database.
+ */
+async function userAlreadyExists(username) {
+  const duplicate = await User.findOne({ where: { username } });
+  if (duplicate === null) {
+    return false;
+  }
+  console.debug(`Duplicate user on registration ${username}`);
+  return true;
+}
+
+/**
  * @param {*} user - The user object.
  * We need this to set the JWT `sub` payload property
  */
 function issueJWT(user) {
-  const { id } = user;
+  const { username } = user;
 
   const expiresIn = '2w';
 
   const payload = {
-    sub: id,
+    sub: username,
     iat: Date.now(),
   };
 
@@ -89,3 +107,4 @@ module.exports.validPassword = validPassword;
 module.exports.genPassword = genPassword;
 module.exports.issueJWT = issueJWT;
 module.exports.authMiddleware = authMiddleware;
+module.exports.userAlreadyExists = userAlreadyExists;

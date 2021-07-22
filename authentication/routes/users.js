@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
 const utils = require('../lib/utils');
-const { publishUser } = require('../config/redis');
+const { publishUser } = require('../models/UserPublisher');
+const { buildUser } = require('../controllers/UserController');
 const { User } = require('../models/User');
 
 router.post('/login', (req, res, next) => {
@@ -28,27 +29,27 @@ router.post('/register', (req, res, next) => {
   const { salt } = saltHash;
   const { hash } = saltHash;
 
-  const newUser = User.build(
-    {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      username: req.body.username,
-      email: req.body.email,
-      hash,
-      salt,
-    },
-  );
-  newUser.save()
-    .then((user) => {
-      publishUser(user);
-      const jwt = utils.issueJWT(user);
-      res.json({
-        success: true, user, token: jwt.token, expiresIn: jwt.expires,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      next(err);
+  utils.userAlreadyExists(req.body.username)
+    .then((duplicate) => {
+      if (duplicate) {
+        res.status(401).json({
+          success: false, msg: 'User already exists',
+        });
+      } else {
+        const newUser = buildUser(req.body, hash, salt);
+        newUser.save()
+          .then((user) => {
+            publishUser(user);
+            const jwt = utils.issueJWT(user);
+            res.json({
+              success: true, user, token: jwt.token, expiresIn: jwt.expires,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            next(err);
+          });
+      }
     });
 });
 

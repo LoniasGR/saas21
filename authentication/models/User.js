@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
 const User = sequelize.define('User', {
   firstName: {
@@ -11,6 +11,7 @@ const User = sequelize.define('User', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   email: {
     type: DataTypes.STRING,
@@ -23,12 +24,5 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
   },
 });
-
-async function checkTables() {
-  await sequelize.sync();
-  console.debug('All models are synchronized.');
-}
-
-checkTables();
 
 module.exports = { User };

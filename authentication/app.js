@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-
 /**
  * -------------- GENERAL SETUP ----------------
 */
@@ -8,10 +7,12 @@ const morgan = require('morgan');
 const app = express();
 
 // Configures the database and opens a global connection that can be used in any module
-require('./config/database');
+const { checkTables } = require('./config/database');
 
 // Must first load the models
 require('./models/User');
+
+checkTables();
 
 // Set up Redis
 require('./config/redis');
