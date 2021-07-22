@@ -1,5 +1,5 @@
 const router = require('express').Router();
 
-router.use('/users', require('./users'));
+router.use('/api/auth/', require('./users'));
 
 module.exports = router;
