@@ -10,12 +10,13 @@ if (process.env.NODE_ENV === 'development') {
     storage: './db/authentication.sqlite',
   });
 } else {
-  const database = process.env.DB_NAME || 'users';
+  const database = process.env.DB_NAME || 'auth';
   const dbHost = process.env.DB_HOST || 'localhost';
   const dbPort = process.env.DB_PORT || '5432';
   const username = process.env.DB_USER || 'postgres';
   const password = process.env.DB_PASS;
   const dialect = 'postgres';
+
   sequelize = new Sequelize(database, username, password, {
     host: dbHost,
     port: dbPort,

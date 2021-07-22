@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const utils = require('../lib/utils');
+const { publishUser } = require('../config/redis');
 const { User } = require('../models/User');
 
 router.post('/login', (req, res, next) => {
@@ -39,6 +40,7 @@ router.post('/register', (req, res, next) => {
   );
   newUser.save()
     .then((user) => {
+      publishUser(user);
       const jwt = utils.issueJWT(user);
       res.json({
         success: true, user, token: jwt.token, expiresIn: jwt.expires,
