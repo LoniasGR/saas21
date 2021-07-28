@@ -19,7 +19,7 @@ checkTables();
 
 // Set up Redis
 const { UserSubscriber } = require('./config/redis');
-require('./models/UserSubscriber');
+require('./controllers/UserSubscriber');
 
 UserSubscriber.subscribe('Users');
 

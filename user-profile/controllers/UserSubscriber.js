@@ -1,5 +1,5 @@
 const { UserSubscriber } = require('../config/redis');
-const { User } = require('./User');
+const { User } = require('../models/User');
 
 UserSubscriber.on('subscribe', (channel, count) => {
   console.log(`Subscriber subscribed in channel '${channel}'`);

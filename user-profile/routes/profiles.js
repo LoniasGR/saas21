@@ -12,7 +12,7 @@ router.get('/:userName', utils.authMiddleware, (req, res, next) => {
     res.status(200).json({ success: true });
   } else {
     // If the user is looking at a different profile,
-    // then give them less info.
+    // then give them less info or an error.
     res.status(200).json({ success: true });
   }
 });

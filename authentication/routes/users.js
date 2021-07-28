@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const utils = require('../lib/utils');
-const { publishUser } = require('../models/UserPublisher');
+const { publishUser } = require('../controllers/UserPublisher');
 const { buildUser } = require('../controllers/UserController');
 const { User } = require('../models/User');
 
