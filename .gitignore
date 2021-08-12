@@ -1,20 +1,24 @@
-# Private and Public keys
-*.pem
-
-# Examples 
-examples/
-
 # WebStorm configs
 .idea/
-
-# VSCode folder
-.vscode/
 
 # Database folder
 db/
 
-# Redis data
-redis/
+# VSCode settings
+.vscode/
+
+# Sqlite Databases
+*.sqlite
+
+# Private and Public keys
+
+*.pem
+
+# Redis Database
+/redis/
+
+# Examples folder
+examples/
 
 # Backups
 *.bak*
