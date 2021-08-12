@@ -4,6 +4,18 @@
 # Database folder
 /db/
 
+# Sqlite Databases
+*.sqlite
+
+# Keypairs
+*.pem
+
+# Redis Database
+/redis/
+
+# Examples folder
+examples/
+
 # Backups
 *.bak*
 
