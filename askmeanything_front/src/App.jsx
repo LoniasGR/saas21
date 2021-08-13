@@ -9,6 +9,8 @@ import SignUp from './components/SignUp';
 
 import './css/App.css';
 
+const baseUrl = 'https://microservices.lavdelas.me';
+
 class App extends React.Component {
   constructor() {
     super();
@@ -27,11 +29,21 @@ class App extends React.Component {
     });
   }
 
-  handleLogIn() {
-    this.setState({
-      loggedIn: true,
-      username: 'Leonidas',
-    });
+  handleLogIn(username, password) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    };
+    fetch(`${baseUrl}/api/auth/login`, requestOptions)
+      .then((response) => response.json())
+      .then(this.setState({
+        loggedIn: true,
+        username: 'Leonidas',
+      }));
   }
 
   render() {
