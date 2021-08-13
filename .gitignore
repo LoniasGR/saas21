@@ -1,6 +1,9 @@
 # VSCode settings
 .vscode/
 
+# Database folder
+/db/
+
 # Sqlite Databases
 *.sqlite
 

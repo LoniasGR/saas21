@@ -1,0 +1,4 @@
+# Don't copy these folders/files when building a container
+
+node_modules
+npm-debug.log
