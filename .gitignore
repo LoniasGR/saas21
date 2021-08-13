@@ -1,13 +1,18 @@
-# VSCode settings
-.vscode/
+
+# WebStorm configs
+.idea/
 
 # Database folder
-/db/
+db/
+
+# VSCode settings
+.vscode/
 
 # Sqlite Databases
 *.sqlite
 
-# Keypairs
+# Private and Public keys
+
 *.pem
 
 # Redis Database
