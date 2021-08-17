@@ -66,8 +66,24 @@ services:
             - redis
         restart: always
         environment: 
+            NODE_ENV: "production"
             DB_PASS: "${POSTGRES_PASSWORD}"
             DB_NAME: "user_profile"
             DB_HOST: "db"
+            REDIS_HOST: "redis"    
+    frontend:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../frontend
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.frontend
+        container_name: ms_frontend
+        ports: 
+            - "4999:80"
+        depends_on: 
+        - authentication
+        - userprofile
+
+
 
 
