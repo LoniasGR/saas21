@@ -18,23 +18,22 @@ server {
 
   server_name microservices.lavdelas.me;
 
-  location / {
-    try_files $uri $uri/ =404;
-  }
-
   ssl_certificate /etc/letsencrypt/live/lavdelas.me/fullchain.pem; # managed by Certbot
   ssl_certificate_key /etc/letsencrypt/live/lavdelas.me/privkey.pem; # managed by Certbot
   include /etc/letsencrypt/options-ssl-nginx.conf;
   ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-  client_max_body_size 20M;
+
+  location / {
+    proxy_pass http://127.0.0.1:4999;
+  }
 
   location /api/ {
     # Error responses
-    #error_page 404 = @400;         # Invalid paths are treated as bad requests
+    # error_page 404 = @400;         # Invalid paths are treated as bad requests
     # proxy_intercept_errors on;     # Do not send backend errors to the client
     # include api_json_errors.conf;  # API client friendly JSON error responses
-    #default_type application/json; # If no content-type then assume JSON
+    # default_type application/json; # If no content-type then assume JSON
   }
 
   # Source https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-1/
