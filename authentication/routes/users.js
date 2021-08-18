@@ -15,10 +15,13 @@ router.post('/login', (req, res, next) => {
       if (isValid) {
         const tokenObject = utils.issueJWT(user);
         res.status(200).json({
-          success: true, user, token: tokenObject.token, expiresIn: tokenObject.expires,
+          success: true,
+          user: { username: user.username },
+          token: tokenObject.token,
+          expiresIn: tokenObject.expires,
         });
       } else {
-        res.status(401).json({ success: false, msg: 'Wrong Password!' });
+        res.status(401).json({ success: false, msg: 'Wrong password' });
       }
     }).catch((err) => next(err));
 });
@@ -42,7 +45,10 @@ router.post('/register', (req, res, next) => {
             publishUser(user);
             const jwt = utils.issueJWT(user);
             res.json({
-              success: true, user, token: jwt.token, expiresIn: jwt.expires,
+              success: true,
+              user: { username: user.username },
+              token: jwt.token,
+              expiresIn: jwt.expires,
             });
           })
           .catch((err) => {
@@ -50,6 +56,24 @@ router.post('/register', (req, res, next) => {
             next(err);
           });
       }
+    });
+});
+
+// Verify and renew the JWT
+router.get('/verify', utils.authMiddleware, (req, res, next) => {
+  const username = req.jwt.sub;
+  User.findOne({ where: { username } })
+    .then((user) => {
+      if (!user) {
+        res.status(401).json({ success: false, msg: 'User not found' });
+      }
+      const tokenObject = utils.issueJWT({ user });
+      res.status(200).json({
+        success: true,
+        user: { username: user.username },
+        token: tokenObject.token,
+        expiresIn: tokenObject.expires,
+      });
     });
 });
 
