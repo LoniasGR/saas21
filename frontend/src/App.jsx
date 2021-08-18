@@ -1,49 +1,93 @@
 import React from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
-import { Switch, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Landing from './components/Landing';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 
+import { baseUrl } from './constants';
+import verifyToken from './utils';
 import './css/App.css';
-
-const baseUrl = 'https://microservices.lavdelas.me';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       loggedIn: false,
-      username: null,
+      username: '',
+      // eslint-disable-next-line
+      token: '',
     };
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleLoggedIn = this.handleLoggedIn.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+  }
+
+  async componentDidMount() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      verifyToken(token)
+        .then((data) => {
+          if ((data !== undefined) && (data.username !== null)) {
+            this.setState({
+              loggedIn: true,
+              username: data.username,
+              // eslint-disable-next-line
+          token: data.newToken,
+            });
+          }
+        });
+    }
   }
 
   handleSignOut() {
+    localStorage.removeItem('token');
     this.setState({
       loggedIn: false,
-      username: null,
+      username: '',
+      // eslint-disable-next-line
+      token: '',
     });
   }
 
-  handleLogIn(username, password) {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+  handleLoggedIn(username, token) {
+    localStorage.setItem('token', token);
+    this.setState({
+      loggedIn: true,
+      username,
+    });
+  }
+
+  handleSignUp(event, firstName, lastName, email, username, password) {
+    event.disableDefault();
+    axios({
+      method: 'post',
+      url: `${baseUrl}/api/auth/register`,
+      data: {
+        firstName,
+        lastName,
+        email,
         username,
         password,
-      }),
-    };
-    fetch(`${baseUrl}/api/auth/login`, requestOptions)
+      },
+    })
       .then((response) => response.json())
+    // eslint-disable-next-line
+      .then(() => console.log(this.props))
       .then(this.setState({
         loggedIn: true,
         username: 'Leonidas',
-      }));
+      }))
+      .then(() => {
+        const { history } = this.props;
+        history.push('/');
+      })
+      // eslint-disable-next-line
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -55,11 +99,10 @@ class App extends React.Component {
           username={username}
           handleSignOut={this.handleSignOut}
         />
-        {/* <Landing /> */}
         <Switch>
           <Route exact path="/"><Landing /></Route>
-          <Route path="/login"><LogIn handleLogIn={this.handleLogIn} /></Route>
-          <Route path="/signup"><SignUp /></Route>
+          <Route exact path="/login"><LogIn handleLoggedIn={this.handleLoggedIn} /></Route>
+          <Route exact path="/signup"><SignUp handleSignUp={this.handleSignUp} /></Route>
         </Switch>
         <Footer />
       </div>
@@ -67,4 +110,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+export default withRouter(App);
