@@ -32,11 +32,12 @@ router.post('/register', (req, res, next) => {
   const { salt } = saltHash;
   const { hash } = saltHash;
 
-  utils.userAlreadyExists(req.body.username)
+  utils.userAlreadyExists(req.body.username, req.body.email)
     .then((duplicate) => {
-      if (duplicate) {
+      if (duplicate.status) {
+        const { credential } = duplicate;
         res.status(401).json({
-          success: false, msg: 'User already exists',
+          success: false, msg: `${credential} already exists`,
         });
       } else {
         const newUser = buildUser(req.body, hash, salt);

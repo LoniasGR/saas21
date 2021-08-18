@@ -49,13 +49,23 @@ function genPassword(password) {
  * This function takes a username and returns a boolean if already
  * found in the database.
  */
-async function userAlreadyExists(username) {
-  const duplicate = await User.findOne({ where: { username } });
-  if (duplicate === null) {
-    return false;
+async function userAlreadyExists(username, email) {
+  const duplicateUsername = await User.findOne({ where: { username } });
+  const duplicateEmail = await User.findOne({ where: { email } });
+  if ((duplicateUsername === null) && (duplicateEmail === null)) {
+    return { status: false, credential: null };
   }
-  console.debug(`Duplicate user on registration ${username}`);
-  return true;
+
+  console.debug(`Duplicate user on registration of ${username}`);
+  let credential;
+  if (duplicateUsername) {
+    credential = 'username';
+    console.debug(`Duplicate user on registration with username ${username}`);
+  } else {
+    credential = 'email';
+    console.debug(`Duplicate user on registration with email ${email}`);
+  }
+  return { status: true, credential };
 }
 
 /**
