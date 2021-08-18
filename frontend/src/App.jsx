@@ -29,7 +29,7 @@ class App extends React.Component {
 
   async componentDidMount() {
     const token = localStorage.getItem('token');
-    if (token !== null) {
+    if (token) {
       verifyToken(token)
         .then((data) => {
           if ((data !== undefined) && (data.username !== null)) {
@@ -37,8 +37,10 @@ class App extends React.Component {
               loggedIn: true,
               username: data.username,
               // eslint-disable-next-line
-          token: data.newToken,
+              token: data.newToken,
             });
+          } else {
+            localStorage.removeItem('token');
           }
         });
     }
