@@ -40,9 +40,8 @@ class Login extends React.Component {
     this.setState({ unknownUser: false, wrongPassword: false });
     axios.post(`${baseUrl}/api/auth/login`, { username, password })
       .then((response) => {
-        const { handleLoggedIn } = this.props;
+        const { handleLoggedIn, history } = this.props;
         handleLoggedIn(username, response.data.token);
-        const { history } = this.props;
         history.push('/');
       })
       .catch((error) => {
