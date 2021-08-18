@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-// import LogIn from './LogIn';
-// import SignUp from './SignUp';
-// import Landing from './Landing';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 import '../css/Navigation.css';
 
@@ -17,9 +14,9 @@ function Navigation(props) {
     return (
       <nav>
         <ul>
-          <li><Link className="active" to="/">Home</Link></li>
-          <li className="pos_right"><Link to="/login">Log In</Link></li>
-          <li className="pos_right"><Link to="/signup">Sign Up</Link></li>
+          <li><Link className="active" component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
+          <li className="pos_right"><Link component={RouterLink} to="/login" underline="none" color="initial">Log In</Link></li>
+          <li className="pos_right"><Link component={RouterLink} to="/signup" underline="none" color="initial">Sign Up</Link></li>
         </ul>
       </nav>
     );
@@ -28,8 +25,8 @@ function Navigation(props) {
   return (
     <nav>
       <ul>
-        <li><Link className="active" to="/">Home</Link></li>
-        <li className="pos_right"><Link to="/" replace onClick={handleSignOut}>Sign Out</Link></li>
+        <li><Link className="active" component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
+        <li className="pos_right"><Link component={RouterLink} to="/" replace onClick={handleSignOut} underline="none" color="initial">Sign Out</Link></li>
         <li className="pos_right usr_welcome">
           Welcome,
           {' '}
