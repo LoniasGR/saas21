@@ -45,4 +45,8 @@ server {
   location = /api/auth/register {
     proxy_pass http://127.0.0.1:5000;
   }
+
+  location = /api/auth/verify {
+        proxy_pass http://127.0.0.1:5000;
+  }
 }
