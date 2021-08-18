@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 /**
  * -------------- GENERAL SETUP ----------------
@@ -21,6 +22,10 @@ require('./config/redis');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cross Origin Resource Sharing
+app.use(cors());
+
+// Logging for requests etc
 app.use(morgan('dev'));
 
 /**
