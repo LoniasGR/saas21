@@ -1,7 +1,14 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
+import { baseUrl } from '../constants';
+import View from '../views/SignUp';
+
+function handleMouseDownPassword(event) {
+  event.preventDefault();
+}
 class SignUp extends React.Component {
   constructor() {
     super();
@@ -11,8 +18,17 @@ class SignUp extends React.Component {
       email: '',
       username: '',
       password: '',
+      showPassword: false,
+      duplicateUsername: false,
+      duplicateEmail: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+  }
+
+  handleClickShowPassword() {
+    this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
   }
 
   handleChange(event) {
@@ -20,95 +36,86 @@ class SignUp extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleSignUp(event, _firstName, _lastName, email, username, password) {
+    event.preventDefault();
+    let firstName;
+    let lastName;
+    if (_firstName === '') {
+      firstName = null;
+    }
+    if (_lastName === '') {
+      lastName = null;
+    }
+
+    this.setState({
+      duplicateUsername: false,
+      duplicateEmail: false,
+    });
+    axios({
+      method: 'post',
+      url: `${baseUrl}/api/auth/register`,
+      data: {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+      },
+    })
+      .then((response) => {
+        const { handleLoggedIn, history } = this.props;
+        handleLoggedIn(username, response.data.token);
+        history.push('/');
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          if (err.response.data.msg === 'username already exists') {
+            this.setState({ duplicateUsername: true });
+          } else if (err.response.data.msg === 'email already exists') {
+            this.setState({ duplicateEmail: true });
+          }
+        }
+      });
+  }
+
   render() {
     const {
-      firstName, lastName, email, username, password,
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+      showPassword,
+      duplicateEmail,
+      duplicateUsername,
     } = this.state;
-    const { handleSignUp } = this.props;
 
     return (
-      <div className="login-wrapper">
-        <form onSubmit={
-          (event) => handleSignUp(event, firstName, lastName, email, username, password)
-        }
-        >
-          <label htmlFor="username">
-            Username:
-            <input
-              type="text"
-              placeholder="Username"
-              name="username"
-              autoComplete="username"
-              value={username}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label htmlFor="firstName">
-            First name:
-            <input
-              type="text"
-              placeholder="John"
-              name="firstName"
-              value={firstName}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label htmlFor="lastName">
-            Last name:
-            <input
-              type="text"
-              placeholder="Doe"
-              name="lastName"
-              value={lastName}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label htmlFor="email">
-            Email:
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              autoComplete="username"
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Sign Up
-          </Button>
-        </form>
+      <div>
+        <View
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+          username={username}
+          password={password}
+          showPassword={showPassword}
+          duplicateUsername={duplicateUsername}
+          duplicateEmail={duplicateEmail}
+          handleSignUp={this.handleSignUp}
+          handleChange={this.handleChange}
+          handleClickShowPassword={this.handleClickShowPassword}
+          handleMouseDownPassword={handleMouseDownPassword}
+        />
       </div>
     );
   }
 }
 
 SignUp.propTypes = {
-  handleSignUp: propTypes.func,
+  handleLoggedIn: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-SignUp.defaultProps = {
-  handleSignUp: null,
-};
-
-export default SignUp;
+export default withRouter(SignUp);

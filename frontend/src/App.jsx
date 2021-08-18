@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
@@ -9,7 +8,6 @@ import Landing from './components/Landing';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 
-import { baseUrl } from './constants';
 import verifyToken from './utils';
 import './css/App.css';
 
@@ -24,7 +22,6 @@ class App extends React.Component {
     };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleLoggedIn = this.handleLoggedIn.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   async componentDidMount() {
@@ -64,34 +61,6 @@ class App extends React.Component {
     });
   }
 
-  handleSignUp(event, firstName, lastName, email, username, password) {
-    event.disableDefault();
-    axios({
-      method: 'post',
-      url: `${baseUrl}/api/auth/register`,
-      data: {
-        firstName,
-        lastName,
-        email,
-        username,
-        password,
-      },
-    })
-      .then((response) => response.json())
-    // eslint-disable-next-line
-      .then(() => console.log(this.props))
-      .then(this.setState({
-        loggedIn: true,
-        username: 'Leonidas',
-      }))
-      .then(() => {
-        const { history } = this.props;
-        history.push('/');
-      })
-      // eslint-disable-next-line
-      .catch((err) => console.log(err));
-  }
-
   render() {
     const { loggedIn, username } = this.state;
     return (
@@ -104,7 +73,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/"><Landing /></Route>
           <Route exact path="/login"><LogIn handleLoggedIn={this.handleLoggedIn} /></Route>
-          <Route exact path="/signup"><SignUp handleSignUp={this.handleSignUp} /></Route>
+          <Route exact path="/signup"><SignUp handleLoggedIn={this.handleLoggedIn} /></Route>
         </Switch>
         <Footer />
       </div>
