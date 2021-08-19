@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
+const {User } = require('./User');
 
 const UserQuestion = sequelize.define('UserQuestion', {
   questionID: {
@@ -7,5 +8,7 @@ const UserQuestion = sequelize.define('UserQuestion', {
     allowNull: false,
   },
 });
+
+UserQuestion.belongsTo(User);
 
 module.exports.UserQuestion = UserQuestion;
