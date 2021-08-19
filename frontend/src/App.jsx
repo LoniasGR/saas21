@@ -51,7 +51,12 @@ class App extends React.Component {
               redirect: true,
             });
           }
-        });
+        })
+        .catch((err) => console.error(err));
+    } else {
+      this.setState({
+        redirect: true,
+      });
     }
   }
 
