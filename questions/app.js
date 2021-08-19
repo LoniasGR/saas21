@@ -13,7 +13,8 @@ const { checkTables } = require('./config/database');
 
 // Must first load the models
 require('./models/Question');
-require('./models/Keyword');
+require('./models/QuestionKeyword');
+require('./models/associations');
 
 checkTables();
 

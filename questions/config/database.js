@@ -8,7 +8,7 @@ let sequelize;
 if (process.env.NODE_ENV === 'development') {
   sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './db/user_profile.sqlite',
+    storage: './db/questions.sqlite',
   });
 } else {
   const database = process.env.DB_NAME || 'questions';

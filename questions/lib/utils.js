@@ -5,6 +5,8 @@ const path = require('path');
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
 
+const alphanumeric = /^[\p{L}\p{N}]+$/u;
+
 /**
  * @param {*} req - The HTTP request.
  * @param {*} res - The HTTP response.
@@ -32,4 +34,13 @@ function authMiddleware(req, res, next) {
   }
 }
 
+/**
+ * @param {*} str - The string to test.
+ * Returns true if string is Unicode alphanumeric.
+ */
+function isAlnum(str) {
+  return (alphanumeric).test(str);
+}
+
 module.exports.authMiddleware = authMiddleware;
+module.exports.isAlnum = isAlnum;

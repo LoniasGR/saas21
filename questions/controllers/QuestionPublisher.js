@@ -1,12 +1,13 @@
 const { QuestionPublisher } = require('../config/redis');
 
 async function publishQuestion(question) {
-  console.debug(`Publishing user with username: ${question.title}`);
+  console.debug(`Publishing question with title: ${question.title}`);
   const questionData = {
+    id: question.id,
     title: question.title,
     description: question.description,
-    askedOn: question.askedOn,
     askedBy: question.askedBy,
+    createdAt: question.createdAt,
   };
   console.debug(questionData);
   QuestionPublisher.publish('Questions', JSON.stringify(questionData));
