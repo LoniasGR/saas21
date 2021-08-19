@@ -7,7 +7,7 @@ const { Question } = require('../models/Question');
 const { QuestionKeyword } = require('../models/QuestionKeyword');
 const utils = require('../lib/utils');
 
-router.get('/', utils.authMiddleware, (req, res, next) => {
+router.get('/', (req, res, next) => {
   Question.findAll()
     .then((questions) => {
       const retQuestions = questions.map((question) => {
