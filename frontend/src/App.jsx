@@ -22,6 +22,7 @@ class App extends React.Component {
       username: '',
       // eslint-disable-next-line
       token: '',
+      redirect: false,
     };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleLoggedIn = this.handleLoggedIn.bind(this);
@@ -38,9 +39,17 @@ class App extends React.Component {
               username: data.username,
               // eslint-disable-next-line
               token: data.newToken,
+              redirect: true,
             });
           } else {
             localStorage.removeItem('token');
+            this.setState({
+              loggedIn: false,
+              username: '',
+              // eslint-disable-next-line
+              token: '',
+              redirect: true,
+            });
           }
         });
     }
@@ -65,7 +74,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { loggedIn, username } = this.state;
+    /**
+     * In order not to render and redirect the user multiple times,
+     * we defer the redirection until `componentDidMount` finishes.
+     * This improves a lot the user experience and doesn't end up with
+     * wonky results.
+     */
+    const { loggedIn, username, redirect } = this.state;
     return (
       <div>
         <Header
@@ -75,6 +90,8 @@ class App extends React.Component {
         />
         <Switch>
           <Route exact path="/"><Landing /></Route>
+          { redirect
+          && (
           <Route
             exact
             path="/login"
@@ -84,7 +101,9 @@ class App extends React.Component {
                 : <LogIn handleLoggedIn={this.handleLoggedIn} />
             )}
           />
-
+          )}
+          {redirect
+          && (
           <Route
             exact
             path="/register"
@@ -94,15 +113,18 @@ class App extends React.Component {
                 : <Register handleLoggedIn={this.handleLoggedIn} />
             )}
           />
-
+          )}
+          {redirect
+          && (
           <Route
             exact
-            path="ask-question"
+            path="/ask-question"
             render={() => (
               loggedIn ? <NewQuestion />
                 : <Redirect to="/login" />
             )}
           />
+          )}
         </Switch>
         <Footer />
       </div>
