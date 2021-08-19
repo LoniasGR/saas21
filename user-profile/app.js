@@ -15,6 +15,7 @@ const { checkTables } = require('./config/database');
 require('./models/User');
 require('./models/UserQuestion');
 require('./models/UserAnswer');
+require('./models/associations');
 
 checkTables();
 
