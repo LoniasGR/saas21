@@ -12,7 +12,6 @@ import Register from './components/Register';
 import NewQuestion from './components/NewQuestion';
 
 import verifyToken from './utils';
-import './css/App.css';
 
 class App extends React.Component {
   constructor() {
@@ -52,6 +51,7 @@ class App extends React.Component {
             });
           }
         })
+      // eslint-disable-next-line
         .catch((err) => console.error(err));
     } else {
       this.setState({

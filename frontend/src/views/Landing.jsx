@@ -29,7 +29,6 @@ function NoQuestions() {
 
 function Landing(props) {
   const { questions } = props;
-  console.log(questions);
   return (
     <div>
       <img src={logo} alt="AMA logo" />
