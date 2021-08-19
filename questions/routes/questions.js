@@ -43,7 +43,6 @@ router.post('/new', utils.authMiddleware, (req, res, next) => {
             success: true,
             question_id: question.id,
           });
-          next();
         })
         .catch((err) => {
           console.log(err);
