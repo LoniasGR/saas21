@@ -12,18 +12,13 @@ const app = express();
 const { checkTables } = require('./config/database');
 
 // Must first load the models
-require('./models/User');
-require('./models/UserQuestion');
-require('./models/UserAnswer');
-require('./models/associations');
+require('./models/Question');
+require('./models/Keyword');
 
 checkTables();
 
 // Set up Redis
-const { UserSubscriber } = require('./config/redis');
-require('./controllers/UserSubscriber');
-
-UserSubscriber.subscribe('Users');
+require('./config/redis');
 
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());

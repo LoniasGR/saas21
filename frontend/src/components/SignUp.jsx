@@ -42,9 +42,13 @@ class SignUp extends React.Component {
     let lastName;
     if (_firstName === '') {
       firstName = null;
+    } else {
+      firstName = _firstName;
     }
     if (_lastName === '') {
       lastName = null;
+    } else {
+      lastName = _lastName;
     }
 
     this.setState({
