@@ -25,7 +25,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:keywordId', (req, res, next) => {
-  Keyword.findOne({ where: { id: req.params.keywordId } })
+  const id = req.params.keywordId;
+  let key;
+  if (utils.isOnlyNum(id)) {
+    key = 'id';
+  } else {
+    key = 'name';
+  }
+  Keyword.findOne({ where: { [key]: id } })
     .then((keyword) => {
       if (!keyword) {
         res.status(404).json({ success: false, msg: 'Keyword not found' });

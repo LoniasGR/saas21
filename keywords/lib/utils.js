@@ -6,6 +6,7 @@ const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
 
 const alphanumeric = /^[\p{L}\p{N}]+$/u;
+const onlyNumbers = /^\d+$/;
 
 /**
  * @param {*} req - The HTTP request.
@@ -42,5 +43,10 @@ function isAlnum(str) {
   return (alphanumeric).test(str);
 }
 
+function isOnlyNum(str) {
+  return (onlyNumbers).test(str);
+}
+
 module.exports.authMiddleware = authMiddleware;
 module.exports.isAlnum = isAlnum;
+module.exports.isOnlyNum = isOnlyNum;
