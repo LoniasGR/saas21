@@ -35,8 +35,9 @@ class Login extends React.Component {
     this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
   }
 
-  handleLogIn(event, username, password) {
+  handleLogIn(event) {
     event.preventDefault();
+    const { username, password } = this.state;
     this.setState({ unknownUser: false, wrongPassword: false });
     axios.post(`${baseUrl}/api/auth/login`, { username, password })
       .then((response) => {

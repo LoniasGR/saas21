@@ -16,14 +16,17 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    '&. MuiFormControl-root': {
-      width: '100%',
-      margin: '1em',
-    },
+    width: '100%',
+    margin: '1em',
   },
-});
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '32ch',
+  },
+}));
 
 const Login = (props) => {
   const {
@@ -43,9 +46,7 @@ const Login = (props) => {
     <div>
       <form
         className={classes.root}
-        onSubmit={(event) => {
-          handleLogIn(event, username, password);
-        }}
+        onSubmit={handleLogIn}
       >
         <Grid
           container
@@ -72,6 +73,7 @@ const Login = (props) => {
                 variant="outlined"
                 required
                 helperText={unknownUser && 'User not found'}
+                className={classes.textField}
                 fullWidth
               />
             </FormControl>

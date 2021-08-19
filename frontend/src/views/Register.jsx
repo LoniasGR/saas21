@@ -11,6 +11,19 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    margin: '1em',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '32ch',
+  },
+}));
 
 const Register = (props) => {
   const {
@@ -27,15 +40,12 @@ const Register = (props) => {
     handleClickShowPassword,
     handleMouseDownPassword,
   } = props;
+  const classes = useStyles();
   return (
     <div>
       <form
-        // className={classes.root}
-        onSubmit={
-          (event) => {
-            handleRegister(event, firstName, lastName, email, username, password);
-          }
-        }
+        className={classes.root}
+        onSubmit={handleRegister}
       >
         <Grid
           container
@@ -58,6 +68,7 @@ const Register = (props) => {
                 autoComplete="username"
                 value={username}
                 onChange={handleChange}
+                className={classes.textField}
                 variant="outlined"
                 helperText={duplicateUsername && 'Username already exists'}
                 required
@@ -75,6 +86,7 @@ const Register = (props) => {
                 name="firstName"
                 value={firstName}
                 onChange={handleChange}
+                className={classes.textField}
                 variant="outlined"
               />
             </FormControl>
@@ -90,6 +102,7 @@ const Register = (props) => {
                 name="lastName"
                 value={lastName}
                 onChange={handleChange}
+                className={classes.textField}
                 variant="outlined"
               />
             </FormControl>
@@ -105,6 +118,7 @@ const Register = (props) => {
                 label="Email"
                 name="email"
                 value={email}
+                className={classes.textField}
                 autoComplete="username"
                 helperText={duplicateEmail && 'There is already a user with the given email'}
                 onChange={handleChange}

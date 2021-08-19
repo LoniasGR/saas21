@@ -36,20 +36,11 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleRegister(event, _firstName, _lastName, email, username, password) {
+  handleRegister(event) {
     event.preventDefault();
-    let firstName;
-    let lastName;
-    if (_firstName === '') {
-      firstName = null;
-    } else {
-      firstName = _firstName;
-    }
-    if (_lastName === '') {
-      lastName = null;
-    } else {
-      lastName = _lastName;
-    }
+    const {
+      firstName, lastName, username, password, email,
+    } = this.state;
 
     this.setState({
       duplicateUsername: false,
@@ -59,8 +50,8 @@ class Register extends React.Component {
       method: 'post',
       url: `${baseUrl}/api/auth/register`,
       data: {
-        firstName,
-        lastName,
+        firstName: (firstName === '' ? null : firstName),
+        lastName: (lastName === '' ? null : lastName),
         email,
         username,
         password,
