@@ -52,8 +52,8 @@ services:
             DB_PASS: "${POSTGRES_PASSWORD}"
             DB_HOST: "db" 
             DB_NAME: "auth"
-            REDIS_HOST: "redis"    
-
+            REDIS_HOST: "redis"  
+    
     userprofile:
         build: 
             # Context path is relative to docker-compose file (I guess)
@@ -65,12 +65,55 @@ services:
             - db
             - redis
         restart: always
+        ports: 
+            - "5001:3000"
         environment: 
             NODE_ENV: "production"
             DB_PASS: "${POSTGRES_PASSWORD}"
             DB_NAME: "user_profile"
             DB_HOST: "db"
+            REDIS_HOST: "redis"     
+    
+    questions:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../questions
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.questions
+        container_name: ms_questions
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5002:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "questions"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"  
+        
+    keywords:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../keywords
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.keywords
+        container_name: ms_keywords
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5003:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "keywords"
+            DB_HOST: "db"
             REDIS_HOST: "redis"    
+    
     frontend:
         build: 
             # Context path is relative to docker-compose file (I guess)
@@ -78,11 +121,14 @@ services:
             # Dockerfile path is relative to link
             dockerfile: ../docker/Dockerfile.frontend
         container_name: ms_frontend
+        restart: always
         ports: 
             - "4999:80"
         depends_on: 
         - authentication
         - userprofile
+        - questions
+        - keywords
 
 
 
