@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 
 const QuestionKeyword = sequelize.define('QuestionKeyword', {
-  keywordID: {
+  keywordId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

@@ -2,77 +2,90 @@ const router = require('express').Router();
 
 const { publishQuestion } = require('../controllers/QuestionPublisher');
 const { buildQuestion } = require('../controllers/QuestionController');
+const { addQuestionKeywords } = require('../controllers/QuestionKeywordController');
 const { Question } = require('../models/Question');
+const { QuestionKeyword } = require('../models/QuestionKeyword');
 const utils = require('../lib/utils');
-const { buildKeyword, keywordAlreadyExists, getKeywords } = require('../controllers/KeywordController');
-const { publishKeyword } = require('../controllers/KeywordPublisher');
-const { route } = require('../../authentication/routes/users');
 
-router.get('/', (req, res, next) => {
+router.get('/', utils.authMiddleware, (req, res, next) => {
+  Question.findAll()
+    .then((questions) => {
+      const retQuestions = questions.map((question) => {
+        const questionData = {
+          id: question.id,
+          title: question.title,
+          description: question.description,
+          askedBy: question.askedBy,
+          askedAt: question.createdAt,
+        };
+        return questionData;
+      });
 
+      res.status(200).json({
+        success: true,
+        questions: retQuestions,
+      });
+    });
 });
 
 router.get('/:questionId', (req, res, next) => {
-
-});
-
-router.get('/keywords', (req, res, next) => {
-
-});
-
-router.get('/keywords/:keywordId', (req, res, next) => {
-
+  if (!utils.isOnlyNum(req.params.questionId)) {
+    res.status(404).json({ success: false, msg: 'Question not found' });
+  } else {
+    Question.findOne({ where: { id: req.params.questionId } })
+      .then((question) => {
+        if (!question) {
+          res.status(404).json({ success: false, msg: 'Question not found' });
+        } else {
+          QuestionKeyword.findAll({ where: { QuestionId: question.id } })
+            .then((keywords) => {
+              const retKeywords = keywords.map((keyword) => ({
+                keywordId: keyword.keywordId,
+              }));
+              const retData = {
+                id: question.id,
+                title: question.title,
+                description: question.description,
+                askedBy: question.askedBy,
+                askedAt: question.createdAt,
+                keywords: retKeywords,
+              };
+              res.status(200).json({
+                success: true,
+                question: retData,
+              });
+            });
+        }
+      });
+  }
 });
 
 router.post('/new', utils.authMiddleware, (req, res, next) => {
   const username = req.jwt.sub;
-  getKeywords(req.body.keywords)
+  utils.getKeywordIds(req.body.keywords)
     .then((keywords) => {
-      console.log(keywords);
       if (keywords.some((elem) => elem === null)) {
         res.status(401).json({
           success: false,
           msg: 'Provided keywords do not exist.',
         });
+      } else {
+        const newQuestion = buildQuestion(req.body, username);
+        newQuestion.save()
+          .then((question) => {
+            addQuestionKeywords(question.id, keywords);
+            publishQuestion(question, keywords);
+            res.json({
+              success: true,
+              question_id: question.id,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            next(err);
+          });
       }
-      const newQuestion = buildQuestion(req.body, username);
-      newQuestion.save()
-        .then((question) => {
-          publishQuestion(question);
-          res.json({
-            success: true,
-            question_id: question.id,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          next(err);
-        });
     });
-});
-
-router.post('/new-keyword', utils.authMiddleware, (req, res, next) => {
-  keywordAlreadyExists(req.body.name).then((duplicate) => {
-    if (duplicate) {
-      res.status(401).json({
-        success: false, msg: `${req.body.name} already exists`,
-      });
-    } else {
-      const newKeyword = buildKeyword(req.body);
-      newKeyword.save()
-        .then((keyword) => {
-          publishKeyword(keyword);
-          res.json({
-            success: true,
-            name: keyword.name,
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-          next(err);
-        });
-    }
-  });
 });
 
 module.exports = router;
