@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,15 +17,23 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: '100ch',
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 function NewQuestion(props) {
-  console.log(props);
   const {
-    title, description, handleChange, handleSubmitQuestion,
+    title,
+    description,
+    keywords,
+    possibleKeywords,
+    handleChange,
+    handleAutocompleteChange,
+    handleSubmitQuestion,
   } = props;
   const classes = useStyles();
-
   return (
     <div>
       <form onSubmit={(event) => {
@@ -40,7 +49,7 @@ function NewQuestion(props) {
           spacing={2}
         >
           <h1>Ask a Question</h1>
-          <Grid item xs={10} sm={6}>
+          <Grid item xs="auto">
             <TextField
               id="question-title"
               label="Question Title"
@@ -55,7 +64,7 @@ function NewQuestion(props) {
               className={classes.textField}
             />
           </Grid>
-          <Grid item xs={10} sm={6}>
+          <Grid item xs="auto">
             <TextField
               id="question-description"
               label="Question Description"
@@ -71,7 +80,26 @@ function NewQuestion(props) {
               className={classes.textField}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs="auto">
+            <Autocomplete
+              multiple
+              name="keywords"
+              className={classes.textField}
+              id="keywords-autocomplete"
+              options={possibleKeywords}
+              value={keywords}
+              onChange={handleAutocompleteChange}
+              renderInput={(params) => (
+                <TextField
+                // eslint-disable-next-line
+                  {...params}
+                  variant="outlined"
+                  label="Keywords"
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs="auto">
             <Button
               type="submit"
               variant="contained"
@@ -90,7 +118,10 @@ function NewQuestion(props) {
 NewQuestion.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  possibleKeywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleAutocompleteChange: PropTypes.func.isRequired,
   handleSubmitQuestion: PropTypes.func.isRequired,
 };
 
