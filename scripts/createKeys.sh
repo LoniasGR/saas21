@@ -9,3 +9,4 @@ cp id_rsa_pub.pem ./authentication/
 
 cp id_rsa_pub.pem ./user-profile/
 cp id_rsa_pub.pem ./questions/
+cp id_rsa_pub.pem ./keywords/
