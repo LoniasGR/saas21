@@ -4,12 +4,12 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import { baseUrl } from '../constants';
-import View from '../views/SignUp';
+import View from '../views/Register';
 
 function handleMouseDownPassword(event) {
   event.preventDefault();
 }
-class SignUp extends React.Component {
+class Register extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,7 +24,7 @@ class SignUp extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
   handleClickShowPassword() {
@@ -36,7 +36,7 @@ class SignUp extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSignUp(event, _firstName, _lastName, email, username, password) {
+  handleRegister(event, _firstName, _lastName, email, username, password) {
     event.preventDefault();
     let firstName;
     let lastName;
@@ -105,7 +105,7 @@ class SignUp extends React.Component {
           showPassword={showPassword}
           duplicateUsername={duplicateUsername}
           duplicateEmail={duplicateEmail}
-          handleSignUp={this.handleSignUp}
+          handleRegister={this.handleRegister}
           handleChange={this.handleChange}
           handleClickShowPassword={this.handleClickShowPassword}
           handleMouseDownPassword={handleMouseDownPassword}
@@ -115,11 +115,11 @@ class SignUp extends React.Component {
   }
 }
 
-SignUp.propTypes = {
+Register.propTypes = {
   handleLoggedIn: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default withRouter(SignUp);
+export default withRouter(Register);

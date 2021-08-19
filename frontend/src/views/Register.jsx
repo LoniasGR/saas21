@@ -12,7 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-const SignUp = (props) => {
+const Register = (props) => {
   const {
     firstName,
     lastName,
@@ -22,7 +22,7 @@ const SignUp = (props) => {
     showPassword,
     duplicateUsername,
     duplicateEmail,
-    handleSignUp,
+    handleRegister,
     handleChange,
     handleClickShowPassword,
     handleMouseDownPassword,
@@ -33,7 +33,7 @@ const SignUp = (props) => {
         // className={classes.root}
         onSubmit={
           (event) => {
-            handleSignUp(event, firstName, lastName, email, username, password);
+            handleRegister(event, firstName, lastName, email, username, password);
           }
         }
       >
@@ -154,7 +154,7 @@ const SignUp = (props) => {
   );
 };
 
-SignUp.propTypes = {
+Register.propTypes = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
@@ -163,14 +163,14 @@ SignUp.propTypes = {
   password: PropTypes.string.isRequired,
   duplicateUsername: PropTypes.bool,
   duplicateEmail: PropTypes.bool,
-  handleSignUp: PropTypes.func.isRequired,
+  handleRegister: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClickShowPassword: PropTypes.func.isRequired,
   handleMouseDownPassword: PropTypes.func.isRequired,
 };
 
-SignUp.defaultProps = {
+Register.defaultProps = {
   duplicateUsername: false,
   duplicateEmail: false,
 };
-export default SignUp;
+export default Register;
