@@ -15,7 +15,7 @@ KeywordPublisher.on('ready', () => {
 });
 
 QuestionSubscriber.on('ready', () => {
-  console.debug('KeywordPublisher: Connected to Redis server successfully.');
+  console.debug('QuestionSubscriber: Connected to Redis server successfully.');
 });
 
 module.exports.KeywordPublisher = KeywordPublisher;
