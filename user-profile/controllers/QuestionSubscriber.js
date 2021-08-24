@@ -1,5 +1,6 @@
 const { QuestionSubscriber } = require('../config/redis');
 const { UserQuestion } = require('../models/UserQuestion');
+const { User } = require('../models/User');
 
 QuestionSubscriber.on('subscribe', (channel, count) => {
   console.debug(`Subscriber subscribed in channel '${channel}'`);
@@ -8,11 +9,14 @@ QuestionSubscriber.on('subscribe', (channel, count) => {
 QuestionSubscriber.on('message', ((channel, message) => {
   console.debug(`Subscriber received message in channel '${channel}': ${message}`);
   const question = JSON.parse(message);
-  const newUserQuestion = UserQuestion.build({
-    questionId: question.id,
-    UserId: question.askedBy,
-  });
-  newUserQuestion.save()
+  User.findOne({ where: { username: question.askedBy } })
+    .then((user) => {
+      const newUserQuestion = UserQuestion.build({
+        questionId: question.id,
+        UserId: user.id,
+      });
+      newUserQuestion.save();
+    })
     .catch((err) => {
       console.log(err);
     });
