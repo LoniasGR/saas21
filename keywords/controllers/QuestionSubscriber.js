@@ -13,10 +13,9 @@ QuestionSubscriber.on('message', ((channel, message) => {
       questionId: question.id,
       keywordId: keyword,
     });
-    newKeywordQuestion.save()
+    return newKeywordQuestion.save()
       .catch((err) => {
         console.log(err);
       });
-    return 0;
   });
 }));

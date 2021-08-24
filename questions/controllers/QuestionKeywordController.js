@@ -13,9 +13,8 @@ function buildQuestionKeyword(questionId, keywordId) {
 function addQuestionKeywords(questionId, keywordIds) {
   keywordIds.map((keyword) => {
     const newQuestionKeyword = buildQuestionKeyword(questionId, keyword);
-    newQuestionKeyword.save()
+    return newQuestionKeyword.save()
       .catch((err) => { console.error(err); });
-    return 0;
   });
 }
 

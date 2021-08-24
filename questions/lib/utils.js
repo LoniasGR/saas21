@@ -41,15 +41,12 @@ function isAlnum(str) {
 }
 
 async function getKeywordIds(keywordsList) {
-  const idList = keywordsList.map((keyword) => {
-    const id = axios.get(`${baseUrl}/api/keywords/${keyword}`)
-      .then((response) => {
-        console.log(response.data);
-        return response.data.keyword.id;
-      })
-      .catch((err) => { console.error(err); return null; });
-    return id;
-  });
+  const idList = keywordsList.map((keyword) => axios.get(`${baseUrl}/api/keywords/${keyword}`)
+    .then((response) => {
+      console.log(response.data);
+      return response.data.keyword.id;
+    })
+    .catch((err) => { console.error(err); return null; }));
   return Promise.all(idList);
 }
 
