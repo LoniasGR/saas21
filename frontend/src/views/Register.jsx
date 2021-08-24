@@ -62,6 +62,7 @@ const Register = (props) => {
               required
             >
               <TextField
+                error={duplicateUsername}
                 id="username"
                 label="Username"
                 name="username"
@@ -112,6 +113,7 @@ const Register = (props) => {
             <FormControl>
               <TextField
                 required
+                error={duplicateEmail}
                 variant="outlined"
                 type="email"
                 id="email"
