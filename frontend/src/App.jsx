@@ -14,7 +14,6 @@ class App extends React.Component {
     this.state = {
       loggedIn: false,
       username: '',
-      // eslint-disable-next-line
       token: '',
       redirect: false,
     };
@@ -32,7 +31,6 @@ class App extends React.Component {
             this.setState({
               loggedIn: true,
               username: data.username,
-              // eslint-disable-next-line
               token: data.newToken,
               redirect: true,
             });
@@ -41,7 +39,6 @@ class App extends React.Component {
             this.setState({
               loggedIn: false,
               username: '',
-              // eslint-disable-next-line
               token: '',
               redirect: true,
             });
@@ -61,7 +58,6 @@ class App extends React.Component {
     this.setState({
       loggedIn: false,
       username: '',
-      // eslint-disable-next-line
       token: '',
     });
   }
@@ -91,13 +87,13 @@ class App extends React.Component {
           username={username}
           handleSignOut={this.handleSignOut}
         />
-        <Routes />
-        <Footer
+        <Routes
           redirect={redirect}
           token={token}
           loggedIn={loggedIn}
           handleLoggedIn={this.handleLoggedIn}
         />
+        <Footer />
       </div>
     );
   }
