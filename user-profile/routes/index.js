@@ -1,5 +1,5 @@
 const router = require('express').Router();
 
-router.use('/api/profile/', require('./profiles'));
+router.use('/api/users/', require('./users'));
 
 module.exports = router;
