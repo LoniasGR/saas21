@@ -20,10 +20,12 @@ require('./models/associations');
 checkTables();
 
 // Set up Redis
-const { UserSubscriber } = require('./config/redis');
+const { UserSubscriber, QuestionSubscriber } = require('./config/redis');
 require('./controllers/UserSubscriber');
+require('./controllers/QuestionSubscriber');
 
 UserSubscriber.subscribe('Users');
+QuestionSubscriber.subscribe('Questions');
 
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());

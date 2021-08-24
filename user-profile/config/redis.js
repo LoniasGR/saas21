@@ -8,9 +8,15 @@ const redisOpts = {
   port: redisPort,
 };
 const UserSubscriber = redis.createClient(redisOpts);
+const QuestionSubscriber = redis.createClient(redisOpts);
 
 UserSubscriber.on('ready', () => {
   console.debug('Connected to Redis server successfully.');
 });
 
+QuestionSubscriber.on('ready', () => {
+  console.debug('QuestionSubscriber: Connected to Redis server successfully.');
+});
+
 module.exports.UserSubscriber = UserSubscriber;
+module.exports.QuestionSubscriber = QuestionSubscriber;
