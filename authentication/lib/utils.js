@@ -72,9 +72,7 @@ async function userAlreadyExists(username, email) {
  * @param {*} user - The user object.
  * We need this to set the JWT `sub` payload property
  */
-function issueJWT(user) {
-  const { username } = user;
-
+function issueJWT(username) {
   const expiresIn = '2w';
 
   const payload = {

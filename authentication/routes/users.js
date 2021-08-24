@@ -62,13 +62,14 @@ router.post('/register', (req, res, next) => {
 
 // Verify and renew the JWT
 router.get('/verify', utils.authMiddleware, (req, res, next) => {
+  console.log(req.jwt);
   const username = req.jwt.sub;
   User.findOne({ where: { username } })
     .then((user) => {
       if (!user) {
         res.status(401).json({ success: false, msg: 'User not found' });
       }
-      const tokenObject = utils.issueJWT({ user });
+      const tokenObject = utils.issueJWT(user.username);
       res.status(200).json({
         success: true,
         user: { username: user.username },
