@@ -32,7 +32,7 @@ class NewKeyword extends React.Component {
       })
       .catch((err) => {
         console.error(err.response);
-        this.setState({ duplicateName: true });
+        if (err.response.data.msg === `${name} already exists`) { this.setState({ duplicateName: true }); }
       });
   }
 
