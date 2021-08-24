@@ -17,12 +17,8 @@ const onlyNumbers = /^\d+$/;
  * Express middleware for custom JWT authentication.
  */
 function authMiddleware(req, res, next) {
-  let tokenParts;
-  try {
-    tokenParts = req.headers.authorization.split(' ');
-  } catch (err) {
-    tokenParts = [null, null];
-  }
+  const tokenParts = req.headers.authorization.split(' ');
+
   if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
     try {
       const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
@@ -36,7 +32,6 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ success: false, msg: 'Unauthorized access' });
   }
 }
-
 /**
  * @param {*} str - The string to test.
  * Returns true if string is Unicode alphanumeric.
