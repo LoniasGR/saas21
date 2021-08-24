@@ -33,6 +33,7 @@ class App extends React.Component {
       verifyToken(token)
         .then((data) => {
           if ((data !== undefined) && (data.username !== null)) {
+            localStorage.setItem('token', token);
             this.setState({
               loggedIn: true,
               username: data.username,
@@ -85,7 +86,9 @@ class App extends React.Component {
      * This improves a lot the user experience and doesn't end up with
      * wonky results.
      */
-    const { loggedIn, username, redirect } = this.state;
+    const {
+      loggedIn, username, token, redirect,
+    } = this.state;
     return (
       <div>
         <Header
@@ -125,7 +128,7 @@ class App extends React.Component {
             exact
             path="/ask-question"
             render={() => (
-              loggedIn ? <NewQuestion />
+              loggedIn ? <NewQuestion token={token} />
                 : <Redirect to="/login" />
             )}
           />

@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import NewKeyword from '../components/NewKeyword';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,8 +31,12 @@ function NewQuestion(props) {
     title,
     description,
     keywords,
+    newKeyword,
     possibleKeywords,
+    token,
     handleChange,
+    handleAddNewKeyword,
+    handleNewKeywordButton,
     handleAutocompleteChange,
     handleSubmitQuestion,
   } = props;
@@ -50,55 +57,86 @@ function NewQuestion(props) {
         >
           <h1>Ask a Question</h1>
           <Grid item xs="auto">
-            <TextField
-              id="question-title"
-              label="Question Title"
-              name="title"
-              value={title}
-              onChange={handleChange}
-              style={{ margin: 8 }}
-              fullWidth
-              margin="normal"
-              variant="outlined"
+            <FormControl
               required
-              className={classes.textField}
-            />
+              variant="outlined"
+            >
+              <TextField
+                id="question-title"
+                label="Question Title"
+                name="title"
+                value={title}
+                onChange={handleChange}
+                style={{ margin: 8 }}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                required
+                className={classes.textField}
+              />
+            </FormControl>
           </Grid>
           <Grid item xs="auto">
-            <TextField
-              id="question-description"
-              label="Question Description"
-              name="description"
-              style={{ margin: 8 }}
-              value={description}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
+            <FormControl
               required
-              multiline
-              className={classes.textField}
-            />
+              variant="outlined"
+            >
+              <TextField
+                id="question-description"
+                label="Question Description"
+                name="description"
+                style={{ margin: 8 }}
+                value={description}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                required
+                multiline
+                className={classes.textField}
+              />
+            </FormControl>
           </Grid>
           <Grid item xs="auto">
-            <Autocomplete
-              multiple
-              name="keywords"
-              className={classes.textField}
-              id="keywords-autocomplete"
-              options={possibleKeywords}
-              value={keywords}
-              onChange={handleAutocompleteChange}
-              renderInput={(params) => (
-                <TextField
+            <FormControl>
+              <Autocomplete
+                multiple
+                name="keywords"
+                className={classes.textField}
+                id="keywords-autocomplete"
+                options={possibleKeywords}
+                value={keywords}
+                onChange={handleAutocompleteChange}
+                renderInput={(params) => (
+                  <TextField
                 // eslint-disable-next-line
                   {...params}
-                  variant="outlined"
-                  label="Keywords"
-                />
-              )}
-            />
+                    variant="outlined"
+                    label="Keywords"
+                  />
+                )}
+              />
+            </FormControl>
           </Grid>
+          {newKeyword ? (
+            <NewKeyword
+              token={token}
+              handleKeywordCancellation={handleNewKeywordButton}
+              handleAddNewKeyword={handleAddNewKeyword}
+            />
+          )
+            : (
+              <Grid item xs="auto">
+                <Button
+                  onClick={handleNewKeywordButton}
+                  variant="contained"
+                  color="secondary"
+                  className="btn btn-success"
+                >
+                  Add new keyword
+                </Button>
+              </Grid>
+            )}
           <Grid item xs="auto">
             <Button
               type="submit"
@@ -106,7 +144,7 @@ function NewQuestion(props) {
               color="primary"
               className="btn btn-success"
             >
-              Submit
+              Submit Question
             </Button>
           </Grid>
         </Grid>
@@ -118,9 +156,13 @@ function NewQuestion(props) {
 NewQuestion.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  newKeyword: PropTypes.bool.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
   possibleKeywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  token: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleNewKeywordButton: PropTypes.func.isRequired,
+  handleAddNewKeyword: PropTypes.func.isRequired,
   handleAutocompleteChange: PropTypes.func.isRequired,
   handleSubmitQuestion: PropTypes.func.isRequired,
 };
