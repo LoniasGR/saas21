@@ -1,6 +1,9 @@
 const jsonwebtoken = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
+
+const { baseUrl } = require('../config/constants');
 
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
@@ -32,4 +35,27 @@ function authMiddleware(req, res, next) {
   }
 }
 
+function getQuestionKeywords(keywords) {
+  const retKeywords = keywords.map((keyword) => axios.get(`${baseUrl}/api/keywords/${keyword}`)
+    .then((response) => response.data.keyword.name)
+    .catch((err) => console.error(err)));
+  return Promise.all(retKeywords);
+}
+
+function getUserQuestions(questions) {
+  return Promise.all(questions.map((question) => axios.get(`${baseUrl}/api/questions/${question.questionId}`)
+    .then(async (response) => {
+      const keywordsIds = response.data.question.keywords.map((keyword) => (keyword.keywordId));
+      const keywords = await getQuestionKeywords(keywordsIds);
+      return ({
+        id: response.data.question.id,
+        title: response.data.question.title,
+        description: response.data.question.description,
+        keywords,
+      });
+    })
+    .catch((err) => console.error(err))));
+}
+
 module.exports.authMiddleware = authMiddleware;
+module.exports.getUserQuestions = getUserQuestions;
