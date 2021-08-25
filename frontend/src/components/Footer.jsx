@@ -1,12 +1,13 @@
 import React from 'react';
 
-import '../css/Footer.css';
+import FooterView from '../views/Footer';
 
 function Footer() {
   return (
-    <footer>
-      <h3>This is the footer!</h3>
-    </footer>
+    <div>
+      <FooterView />
+    </div>
   );
 }
+
 export default Footer;
