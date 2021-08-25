@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   navItem: {
     marginRight: theme.spacing(2),
     color: 'white',
+    fontSize: 16,
   },
   rightSide: {
     marginLeft: 0,
@@ -38,12 +39,12 @@ function LoggedInNav(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Grid container justify="space-between" spacing={24}>
+          <Grid container justifyContent="space-between" spacing={10}>
             <Grid item>
               <Button color="inherit" className={clsx(classes.navItem, classes.navButton)} component={RouterLink} to="/" underline="none">Home</Button>
             </Grid>
             <Grid item>
-              <Typography className={clsx(classes.navItem)} variant="p">{`Welcome, ${userName}`}</Typography>
+              <Typography className={clsx(classes.navItem)} variant="inherit">{`Welcome, ${userName}`}</Typography>
               <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/profile" underline="none">Profile</Button>
               <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/ask-question" underline="none">Ask a Question</Button>
               <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" replace onClick={handleSignOut} underline="none">Sign Out</Button>

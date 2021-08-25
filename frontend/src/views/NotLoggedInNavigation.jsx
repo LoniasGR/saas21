@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navButton: {
     textTransform: 'none',
+    fontSize: 18,
   },
 }));
 
@@ -32,13 +33,13 @@ function NotLoggedInNavigation() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Grid container justify="space-between" spacing={24}>
+          <Grid container justifyContent="space-between" spacing={10}>
             <Grid item>
-              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" underline="none" color="initial">Home</Button>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" underline="none" color="inherit">Home</Button>
             </Grid>
             <Grid item>
-              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/login" underline="none" color="initial">Log In</Button>
-              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/register" underline="none" color="initial">Register</Button>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/login" underline="none" color="inherit">Log In</Button>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/register" underline="none" color="inherit">Register</Button>
             </Grid>
           </Grid>
         </Toolbar>
