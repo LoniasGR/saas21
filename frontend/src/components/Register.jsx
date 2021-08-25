@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import { baseUrl } from '../constants';
+import { authAPIUrl } from '../constants';
 import View from '../views/Register';
 
 function handleMouseDownPassword(event) {
@@ -48,7 +48,7 @@ class Register extends React.Component {
     });
     axios({
       method: 'post',
-      url: `${baseUrl}/api/auth/register`,
+      url: `${authAPIUrl}/register`,
       data: {
         firstName: (firstName === '' ? null : firstName),
         lastName: (lastName === '' ? null : lastName),

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import NewKeywordView from '../views/NewKeyword';
-import { baseUrl } from '../constants';
+import { keywordsAPIUrl } from '../constants';
 
 class NewKeyword extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ class NewKeyword extends React.Component {
     event.preventDefault();
     const { handleAddNewKeyword, token } = this.props;
     const { name, description } = this.state;
-    axios.post(`${baseUrl}/api/keywords/new`, { name, description }, { headers: { Authorization: `${token}` } })
+    axios.post(`${keywordsAPIUrl}/new`, { name, description }, { headers: { Authorization: `${token}` } })
       .then(() => {
         handleAddNewKeyword();
       })

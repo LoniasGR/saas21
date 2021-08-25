@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import LandingView from '../views/Landing';
-import { baseUrl } from '../constants';
+import { questionsAPIUrl } from '../constants';
 
 class Landing extends React.Component {
   constructor() {
@@ -13,7 +13,7 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`${baseUrl}/api/questions/`)
+    axios.get(`${questionsAPIUrl}/`)
       .then((response) => {
         const { questions } = response.data;
         this.setState({ questions });
@@ -22,6 +22,7 @@ class Landing extends React.Component {
 
   render() {
     const { questions } = this.state;
+
     return (
       <div>
         <LandingView

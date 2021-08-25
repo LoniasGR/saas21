@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { baseUrl } from './constants';
+import { authAPIUrl } from './constants';
 
 export default function verifyToken(token) {
-  return axios.get(`${baseUrl}/api/auth/verify`, {
+  return axios.get(`${authAPIUrl}/verify`, {
     headers: {
       Authorization: `${token}`,
     },

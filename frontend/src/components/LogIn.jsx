@@ -6,7 +6,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import View from '../views/Login';
-import { baseUrl } from '../constants';
+import { authAPIUrl } from '../constants';
 
 function handleMouseDownPassword(event) {
   event.preventDefault();
@@ -39,7 +39,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { username, password } = this.state;
     this.setState({ unknownUser: false, wrongPassword: false });
-    axios.post(`${baseUrl}/api/auth/login`, { username, password })
+    axios.post(`${authAPIUrl}/login`, { username, password })
       .then((response) => {
         const { handleLoggedIn, history } = this.props;
         handleLoggedIn(username, response.data.token);

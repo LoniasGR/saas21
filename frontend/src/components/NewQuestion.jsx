@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import NewQuestionView from '../views/NewQuestion';
-import { baseUrl } from '../constants';
+import { keywordsAPIUrl, questionsAPIUrl } from '../constants';
 
 class NewQuestion extends React.Component {
   constructor() {
@@ -24,7 +24,7 @@ class NewQuestion extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`${baseUrl}/api/keywords/`)
+    axios.get(`${keywordsAPIUrl}/`)
       .then((response) => {
         const keywordNames = response.data.keywords.map((keyword) => keyword.name);
         this.setState({ possibleKeywords: keywordNames });
@@ -49,7 +49,7 @@ class NewQuestion extends React.Component {
   }
 
   handleAddNewKeyword() {
-    axios.get(`${baseUrl}/api/keywords/`)
+    axios.get(`${keywordsAPIUrl}/`)
       .then((response) => {
         const keywordNames = response.data.keywords.map((keyword) => keyword.name);
         this.setState({ possibleKeywords: keywordNames, newKeyword: false });
@@ -61,7 +61,7 @@ class NewQuestion extends React.Component {
 
     const { token } = this.props;
     const { title, description, keywords } = this.state;
-    axios.post(`${baseUrl}/api/questions/new`, { title, description, keywords }, { headers: { Authorization: `${token}` } })
+    axios.post(`${questionsAPIUrl}/new`, { title, description, keywords }, { headers: { Authorization: `${token}` } })
       .then(() => {
         const { history } = this.props;
         history.push('/');
