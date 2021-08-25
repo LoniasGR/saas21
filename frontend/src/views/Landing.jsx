@@ -1,24 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Typography from '@material-ui/core/Typography';
+
 import QuestionsFrontPage from './QuestionsFrontPage';
-import '../css/Landing.css';
+
 import logo from '../logo.svg';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   root: {
-    width: '100%',
-
+    paddingBottom: '6%',
   },
-});
+  image: {
+    display: 'block',
+    margin: '10% auto',
+    maxWidth: '40%',
+  },
+}));
 
 function NoQuestions() {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div>
       <Typography variant="h2" align="center" gutterBottom>
         There are no questions.
         <br />
@@ -30,9 +33,10 @@ function NoQuestions() {
 
 function Landing(props) {
   const { questions } = props;
+  const classes = useStyles();
   return (
-    <div>
-      <img src={logo} alt="AMA logo" />
+    <div className={classes.root}>
+      <img src={logo} className={classes.image} alt="AMA logo" />
       {
         (questions.length === 0) ? <NoQuestions /> : <QuestionsFrontPage questions={questions} />
       }

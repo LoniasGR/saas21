@@ -6,11 +6,9 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     position: 'fixed',
-    textAlign: 'center',
     width: '100%',
     height: '6%',
     bottom: 0,
-    left: 0,
     color: 'white',
     backgroundColor: '#3f51b5',
   },

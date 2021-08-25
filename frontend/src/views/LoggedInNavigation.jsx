@@ -14,6 +14,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: '100%',
   },
   navItem: {
     marginRight: theme.spacing(2),
