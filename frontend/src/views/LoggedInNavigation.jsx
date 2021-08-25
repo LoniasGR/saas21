@@ -16,7 +16,7 @@ function LoggedInNav(props) {
         <li className="pos_left"><Link className={clsx('active', 'nav_anchor')} component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
         <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/" replace onClick={handleSignOut} underline="none" color="initial">Sign Out</Link></li>
         <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/ask-question" underline="none" color="initial">Ask a Question</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/" underline="none" color="initial">Profile</Link></li>
+        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/profile" underline="none" color="initial">Profile</Link></li>
         <li className="pos_right usr_welcome">
           Welcome,
           {` ${userName}`}
