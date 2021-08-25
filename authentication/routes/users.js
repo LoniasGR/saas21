@@ -44,7 +44,7 @@ router.post('/register', (req, res, next) => {
         newUser.save()
           .then((user) => {
             publishUser(user);
-            const jwt = utils.issueJWT(user);
+            const jwt = utils.issueJWT(user.username);
             res.json({
               success: true,
               user: { username: user.username },

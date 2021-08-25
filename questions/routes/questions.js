@@ -61,7 +61,7 @@ router.get('/:questionId', (req, res, next) => {
 });
 
 router.post('/new', utils.authMiddleware, (req, res, next) => {
-  const { username } = req.jwt.sub;
+  const username = req.jwt.sub;
   utils.getKeywordIds(req.body.keywords)
     .then((keywords) => {
       if (keywords.some((elem) => elem === null)) {
