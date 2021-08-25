@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import QuestionView from '../views/Question';
+import QuestionView from '../views/QuestionTile';
 import { keywordsAPIUrl, questionsAPIUrl } from '../constants';
 
 class Question extends React.Component {
