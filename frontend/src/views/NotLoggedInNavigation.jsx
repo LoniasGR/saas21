@@ -11,7 +11,7 @@ function NotLoggedInNavigation() {
       <ul className="navList">
         <li className="pos_left"><Link className={clsx('active', 'nav_anchor')} component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
         <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/login" underline="none" color="initial">Log In</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/register" underline="none" color="initial">Sign Up</Link></li>
+        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/register" underline="none" color="initial">Register</Link></li>
       </ul>
     </nav>
   );
