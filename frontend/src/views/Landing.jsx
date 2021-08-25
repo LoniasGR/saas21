@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import QuestionsFrontPage from './QuestionsFrontPage';
 import '../css/Landing.css';
 import logo from '../logo.svg';
 
@@ -33,7 +34,7 @@ function Landing(props) {
     <div>
       <img src={logo} alt="AMA logo" />
       {
-        (questions.length === 0) ? <NoQuestions /> : ''
+        (questions.length === 0) ? <NoQuestions /> : <QuestionsFrontPage questions={questions} />
       }
     </div>
   );
