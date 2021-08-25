@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import Question from '../components/Question';
+import Question from '../components/QuestionTile';
 
 function QuestionsFrontPage(props) {
   const { questions } = props;
