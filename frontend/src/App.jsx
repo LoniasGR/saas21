@@ -67,6 +67,7 @@ class App extends React.Component {
     this.setState({
       loggedIn: true,
       username,
+      token,
     });
   }
 
