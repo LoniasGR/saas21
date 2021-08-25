@@ -1,19 +1,49 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 import clsx from 'clsx';
 
-import '../css/Navigation.css';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  navItem: {
+    marginRight: theme.spacing(2),
+    color: 'white',
+  },
+  rightSide: {
+    marginLeft: 0,
+    position: 'relative',
+  },
+  navButton: {
+    textTransform: 'none',
+  },
+}));
 
 function NotLoggedInNavigation() {
+  const classes = useStyles();
   return (
-    <nav>
-      <ul className="navList">
-        <li className="pos_left"><Link className={clsx('active', 'nav_anchor')} component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/login" underline="none" color="initial">Log In</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/register" underline="none" color="initial">Register</Link></li>
-      </ul>
-    </nav>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Grid container justify="space-between" spacing={24}>
+            <Grid item>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" underline="none" color="initial">Home</Button>
+            </Grid>
+            <Grid item>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/login" underline="none" color="initial">Log In</Button>
+              <Button className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/register" underline="none" color="initial">Register</Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 

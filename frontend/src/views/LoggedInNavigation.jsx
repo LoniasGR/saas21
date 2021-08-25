@@ -1,28 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
 import clsx from 'clsx';
 
-import '../css/Navigation.css';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  navItem: {
+    marginRight: theme.spacing(2),
+    color: 'white',
+  },
+  rightSide: {
+    marginLeft: 0,
+    position: 'relative',
+  },
+  navButton: {
+    textTransform: 'none',
+  },
+}));
 
 function LoggedInNav(props) {
   const {
     userName, handleSignOut,
   } = props;
+  const classes = useStyles();
+
   return (
-    <nav>
-      <ul className="navList">
-        <li className="pos_left"><Link className={clsx('active', 'nav_anchor')} component={RouterLink} to="/" underline="none" color="initial">Home</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/" replace onClick={handleSignOut} underline="none" color="initial">Sign Out</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/ask-question" underline="none" color="initial">Ask a Question</Link></li>
-        <li className="pos_right"><Link className="nav_anchor" component={RouterLink} to="/profile" underline="none" color="initial">Profile</Link></li>
-        <li className="pos_right usr_welcome">
-          Welcome,
-          {` ${userName}`}
-        </li>
-      </ul>
-    </nav>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Grid container justify="space-between" spacing={24}>
+            <Grid item>
+              <Button color="inherit" className={clsx(classes.navItem, classes.navButton)} component={RouterLink} to="/" underline="none">Home</Button>
+            </Grid>
+            <Grid item>
+              <Typography className={clsx(classes.navItem)} variant="p">{`Welcome, ${userName}`}</Typography>
+              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/profile" underline="none">Profile</Button>
+              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/ask-question" underline="none">Ask a Question</Button>
+              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" replace onClick={handleSignOut} underline="none">Sign Out</Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
