@@ -15,6 +15,7 @@ class Profile extends React.Component {
       firstName: '',
       lastName: '',
       questions: [],
+      answers: [],
     };
   }
 
@@ -26,19 +27,20 @@ class Profile extends React.Component {
       },
     })
       .then((response) => {
-        const { user, questions } = response.data;
+        const { user, questions, answers } = response.data;
         this.setState({
           username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
           questions,
+          answers,
         });
       });
   }
 
   render() {
     const {
-      username, firstName, lastName, questions,
+      username, firstName, lastName, questions, answers,
     } = this.state;
     return (
       <div>
@@ -47,6 +49,7 @@ class Profile extends React.Component {
           firstName={firstName}
           lastName={lastName}
           questions={questions}
+          answers={answers}
         />
       </div>
     );

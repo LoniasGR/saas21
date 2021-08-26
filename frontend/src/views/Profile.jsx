@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import Question from '../controllers/QuestionTile';
+import Answer from '../controllers/AnswerTile';
 
 const useStyles = makeStyles({
   root: {
@@ -14,6 +15,8 @@ const useStyles = makeStyles({
   },
   topPart: {
     margin: '3% auto',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomTypography: {
     margin: '1% 0 1% 0',
@@ -22,32 +25,107 @@ const useStyles = makeStyles({
 
 function Profile(props) {
   const {
-    username, firstName, lastName, questions,
+    username,
+    firstName,
+    lastName,
+    questions,
+    answers,
   } = props;
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Grid container spacing={4}>
-        <Grid item className={classes.topPart}>
-          <Typography variant="h2">{`${firstName} ${lastName} (${username})`}</Typography>
+    <Grid container>
+      <Grid item xs={12} className={classes.topPart}>
+        <Typography variant="h2" align="center">{`${firstName} ${lastName} (${username})`}</Typography>
+        <Divider />
+      </Grid>
+      <Grid item container direction="column" xs spacing={2}>
+        <Grid item>
+          <Typography className={classes.bottomTypography} variant="h3">My questions</Typography>
+        </Grid>
+        <Grid item container xs>
+          {questions.map((question) => (
+            <Grid item xs={4} key={question.id}>
+              <Question
+                key={question.id}
+                id={question.id}
+                title={question.title}
+                description={question.description}
+                askedBy={username}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
-      <Divider />
-      <Typography className={classes.bottomTypography} variant="h3">My questions</Typography>
-      <Grid container spacing={2}>
-        {questions.map((question) => (
-          <Grid item xs={2} key={question.id}>
-            <Question
-              key={question.id}
-              id={question.id}
-              title={question.title}
-              description={question.description}
-              askedBy={username}
-            />
-          </Grid>
-        ))}
+      <Grid item container direction="column" xs spacing={2}>
+        <Grid item>
+          <Typography className={classes.bottomTypography} variant="h3">My answers</Typography>
+        </Grid>
+        <Grid item container xs>
+          {answers.map((answer) => (
+            <Grid item xs={4} key={answer.id}>
+              <Answer
+                key={answer.id}
+                answerOf={answer.answerOf}
+                text={answer.text}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Grid>
-    </div>
+    </Grid>
+
+  //   container
+  //   spacing={3}
+  //   direction="column"
+  // >
+  //   <Grid item xs={12} className={classes.topPart}>
+  //     <Typography variant="h2">{`${firstName} ${lastName} (${username})`}</Typography>
+  //     <Divider />
+  //   </Grid>
+  //   <Grid
+  //     item
+  //     container
+  //     direction="row"
+  //     spacing={2}
+  //   >
+  //     <Grid container item direction="column">
+  //       <Grid item xs={2}>
+  //         <Typography className={classes.bottomTypography} variant="h3">
+  // My questions
+  // </Typography>
+  //       </Grid>
+  //       <Grid container item>
+  //         {questions.map((question) => (
+  //           <Grid item xs={2} key={question.id}>
+  //             <Question
+  //               key={question.id}
+  //               id={question.id}
+  //               title={question.title}
+  //               description={question.description}
+  //               askedBy={username}
+  //             />
+  //           </Grid>
+  //         ))}
+  //       </Grid>
+  //     </Grid>
+  //     <Grid container item direction="column">
+  //       <Grid item>
+  //         <Typography className={classes.bottomTypography} variant="h3">My answers</Typography>
+  //       </Grid>
+  //       <Grid container item>
+  //         {answers.map((answer) => (
+  //           <Grid item xs={2} key={answer.id}>
+  //             <Answer
+  //               key={answer.id}
+  //               answerOf={answer.answerOf}
+  //               text={answer.text}
+  //             />
+  //           </Grid>
+  //         ))}
+  //       </Grid>
+  //     </Grid>
+  //   </Grid>
+  // </Grid>
   );
 }
 
@@ -56,5 +134,6 @@ Profile.propTypes = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  answers: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 export default Profile;

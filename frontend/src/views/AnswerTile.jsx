@@ -19,9 +19,8 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 14,
-    margin: 'auto',
+  text: {
+    marginBottom: '2%',
   },
   askedBy: {
     fontSize: 12,
@@ -35,38 +34,39 @@ const useStyles = makeStyles({
   },
 });
 
-function Question(props) {
+function Answer(props) {
   const {
-    title, description, keywords, askedBy,
+    questionTitle, text, askedBy, keywords,
   } = props;
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
-      <CardContent className={classes.cardContent}>
-
-        <Typography variant="h5" component="h2" gutterBottom>{title}</Typography>
-        <Typography className={classes.askedBy} component="h3" color="textSecondary">{`Asked by ${askedBy}`}</Typography>
+      <CardContent>
+        <Typography className={classes.text} variant="h5" component="h2" gutterBottom>{text}</Typography>
+        <Typography component="h3" color="textSecondary">{questionTitle}</Typography>
+        <Typography className={classes.askedBy}>{`Asked by ${askedBy}`}</Typography>
         {keywords.map((keyword) => (
           <Chip className={classes.chip} key={keyword} label={keyword} />
         ))}
-        <Typography variant="body2" component="p" className={classes.description}>{description}</Typography>
-
       </CardContent>
       <CardActions>
-        <Button size="small">See Answers</Button>
+        <Button size="small">View question</Button>
       </CardActions>
+
     </Card>
   );
 }
 
-Question.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+Answer.propTypes = {
+  text: PropTypes.string.isRequired,
+  questionTitle: PropTypes.string.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string),
   askedBy: PropTypes.string.isRequired,
 };
 
-Question.defaultProps = {
+Answer.defaultProps = {
   keywords: [],
 };
-export default Question;
+
+export default Answer;
