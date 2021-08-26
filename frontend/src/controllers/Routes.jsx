@@ -8,10 +8,11 @@ import Landing from './Landing';
 import LogIn from './LogIn';
 import Register from './Register';
 import NewQuestion from './NewQuestion';
+import Profile from './Profile';
 
 function Routes(props) {
   const {
-    redirect, loggedIn, token, handleLoggedIn,
+    redirect, username, loggedIn, token, handleLoggedIn,
   } = props;
   return (
     <Switch>
@@ -28,6 +29,7 @@ function Routes(props) {
           )}
         />
         )}
+
       {redirect
         && (
         <Route
@@ -51,6 +53,18 @@ function Routes(props) {
           )}
         />
         )}
+
+      {redirect
+        && (
+        <Route
+          exact
+          path="/profile"
+          render={() => (
+            loggedIn ? <Profile token={token} username={username} />
+              : <Redirect to="/login" />
+          )}
+        />
+        )}
     </Switch>
   );
 }
@@ -59,6 +73,7 @@ Routes.propTypes = {
   redirect: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   handleLoggedIn: PropTypes.func.isRequired,
 
 };
