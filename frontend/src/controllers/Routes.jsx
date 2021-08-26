@@ -9,6 +9,7 @@ import LogIn from './LogIn';
 import Register from './Register';
 import NewQuestion from './NewQuestion';
 import Profile from './Profile';
+import NotFound from './NotFound';
 
 function Routes(props) {
   const {
@@ -65,6 +66,7 @@ function Routes(props) {
           )}
         />
         )}
+      <Route component={NotFound} />
     </Switch>
   );
 }
