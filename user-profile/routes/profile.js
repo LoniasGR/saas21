@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User } = require('../models/User');
 const { UserQuestion } = require('../models/UserQuestion');
+const { UserAnswer } = require('../models/UserAnswer');
 
 const utils = require('../lib/utils');
 
@@ -21,9 +22,18 @@ router.get('/', utils.authMiddleware, (req, res, next) => {
           .then((questions) => {
             utils.getUserQuestions(questions)
               .then((respQuestions) => {
-                res.status(200).json(
-                  { success: true, user: retUser, questions: respQuestions },
-                );
+                UserAnswer.findAll({ where: { UserId: user.id } })
+                  .then(async (answers) => {
+                    const respAnswers = await utils.getUserAnswers(answers);
+                    res.status(200).json(
+                      {
+                        success: true,
+                        user: retUser,
+                        questions: respQuestions,
+                        answers: respAnswers,
+                      },
+                    );
+                  });
               });
           });
       }
