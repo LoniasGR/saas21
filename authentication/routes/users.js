@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
       }
       const isValid = utils.validPassword(req.body.password, user.hash, user.salt);
       if (isValid) {
-        const tokenObject = utils.issueJWT(user);
+        const tokenObject = utils.issueJWT(user.username);
         res.status(200).json({
           success: true,
           user: { username: user.username },
@@ -62,7 +62,7 @@ router.post('/register', (req, res, next) => {
 
 // Verify and renew the JWT
 router.get('/verify', utils.authMiddleware, (req, res, next) => {
-  const { username } = req.jwt.sub;
+  const username = req.jwt.sub;
   User.findOne({ where: { username } })
     .then((user) => {
       if (!user) {
