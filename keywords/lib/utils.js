@@ -1,6 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 
-const { PUB_KEY, alphanumeric, onlyNumbers } = require('constants');
+const { PUB_KEY, alphanumeric, onlyNumbers } = require('./constants');
 
 /**
  * @param {*} req - The HTTP request.
