@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import NewKeywordView from '../views/NewKeyword';
-import { keywordsAPIUrl } from '../constants';
+import { keywordsAPIUrl } from '../lib/constants';
 
 class NewKeyword extends React.Component {
   constructor() {

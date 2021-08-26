@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import QuestionsFrontPage from './QuestionsFrontPage';
 
-import logo from '../logo.svg';
+import logo from '../images/logo.png';
 
 const useStyles = makeStyles(() => ({
   root: {

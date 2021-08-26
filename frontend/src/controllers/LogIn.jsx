@@ -6,7 +6,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import View from '../views/Login';
-import { authAPIUrl } from '../constants';
+import { authAPIUrl } from '../lib/constants';
 
 function handleMouseDownPassword(event) {
   event.preventDefault();

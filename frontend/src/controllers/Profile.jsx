@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { profileAPIUrl } from '../constants';
+import { profileAPIUrl } from '../lib/constants';
 import ProfileView from '../views/Profile';
 
 class Profile extends React.Component {

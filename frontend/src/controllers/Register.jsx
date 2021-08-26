@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import { authAPIUrl } from '../constants';
+import { authAPIUrl } from '../lib/constants';
 import View from '../views/Register';
 
 function handleMouseDownPassword(event) {

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import LandingView from '../views/Landing';
-import { questionsAPIUrl } from '../constants';
+import { questionsAPIUrl } from '../lib/constants';
 
 class Landing extends React.Component {
   constructor() {

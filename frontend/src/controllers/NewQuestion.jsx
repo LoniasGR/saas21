@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import NewQuestionView from '../views/NewQuestion';
-import { keywordsAPIUrl, questionsAPIUrl } from '../constants';
+import { keywordsAPIUrl, questionsAPIUrl } from '../lib/constants';
 
 class NewQuestion extends React.Component {
   constructor() {
