@@ -1,15 +1,7 @@
 const jsonwebtoken = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 const axios = require('axios');
 
-const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
-const baseUrl = 'https://microservices.lavdelas.me';
-
-const alphanumeric = /^[\p{L}\p{N}]+$/u;
-const onlyNumbers = /^\d+$/;
-
+const constants = require('./constants');
 /**
  * @param {*} req - The HTTP request.
  * @param {*} res - The HTTP response.
@@ -21,7 +13,7 @@ function authMiddleware(req, res, next) {
 
   if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
     try {
-      const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
+      const verification = jsonwebtoken.verify(tokenParts[1], constants.PUB_KEY, { algorithms: ['RS256'] });
       req.jwt = verification;
       next();
     } catch (err) {
@@ -37,11 +29,11 @@ function authMiddleware(req, res, next) {
  * Returns true if string is Unicode alphanumeric.
  */
 function isAlnum(str) {
-  return (alphanumeric).test(str);
+  return (constants.alphanumeric).test(str);
 }
 
 async function getKeywordIds(keywordsList) {
-  const idList = keywordsList.map((keyword) => axios.get(`${baseUrl}/api/keywords/${keyword}`)
+  const idList = keywordsList.map((keyword) => axios.get(`${constants.baseUrl}/api/keywords/${keyword}`)
     .then((response) => {
       console.log(response.data);
       return response.data.keyword.id;
@@ -51,7 +43,7 @@ async function getKeywordIds(keywordsList) {
 }
 
 function isOnlyNum(str) {
-  return (onlyNumbers).test(str);
+  return (constants.onlyNumbers).test(str);
 }
 
 module.exports.authMiddleware = authMiddleware;

@@ -1,12 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 
-const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
-
-const alphanumeric = /^[\p{L}\p{N}]+$/u;
-const onlyNumbers = /^\d+$/;
+const { PUB_KEY, alphanumeric, onlyNumbers } = require('constants');
 
 /**
  * @param {*} req - The HTTP request.
