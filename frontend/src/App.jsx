@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Routes from './components/Routes';
+import Footer from './controllers/Footer';
+import Header from './controllers/Header';
+import Routes from './controllers/Routes';
 
 import verifyToken from './utils';
 
@@ -92,6 +92,7 @@ class App extends React.Component {
           redirect={redirect}
           token={token}
           loggedIn={loggedIn}
+          username={username}
           handleLoggedIn={this.handleLoggedIn}
         />
         <Footer />

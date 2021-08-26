@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import NewKeyword from '../components/NewKeyword';
+import NewKeyword from '../controllers/NewKeyword';
 
 const useStyles = makeStyles((theme) => ({
   root: {
