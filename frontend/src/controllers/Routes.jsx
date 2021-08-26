@@ -12,7 +12,7 @@ import Profile from './Profile';
 
 function Routes(props) {
   const {
-    redirect, username, loggedIn, token, handleLoggedIn,
+    redirect, loggedIn, token, handleLoggedIn,
   } = props;
   return (
     <Switch>
@@ -60,7 +60,7 @@ function Routes(props) {
           exact
           path="/profile"
           render={() => (
-            loggedIn ? <Profile token={token} username={username} />
+            loggedIn ? <Profile token={token} />
               : <Redirect to="/login" />
           )}
         />
@@ -73,7 +73,6 @@ Routes.propTypes = {
   redirect: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
   handleLoggedIn: PropTypes.func.isRequired,
 
 };

@@ -13,6 +13,7 @@ class Question extends React.Component {
       title,
       description,
       askedBy,
+      keywords: [],
     };
   }
 
@@ -35,7 +36,6 @@ class Question extends React.Component {
     const {
       title, description, keywords, askedBy,
     } = this.state;
-
     return (
       <div>
         <QuestionView

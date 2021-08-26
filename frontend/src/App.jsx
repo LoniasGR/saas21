@@ -92,7 +92,6 @@ class App extends React.Component {
           redirect={redirect}
           token={token}
           loggedIn={loggedIn}
-          username={username}
           handleLoggedIn={this.handleLoggedIn}
         />
         <Footer />

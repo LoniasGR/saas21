@@ -4,11 +4,10 @@ const { UserQuestion } = require('../models/UserQuestion');
 
 const utils = require('../lib/utils');
 
-/* GET users listing. */
-router.get('/:userName', utils.authMiddleware, (req, res, next) => {
-  const profile = req.params.userName;
+router.get('/', utils.authMiddleware, (req, res, next) => {
+  const username = req.jwt.sub;
 
-  User.findOne({ where: { username: profile } })
+  User.findOne({ where: { username } })
     .then((user) => {
       if (!user) {
         res.status(401).json({ success: false, msg: 'User not found' });
@@ -34,5 +33,4 @@ router.get('/:userName', utils.authMiddleware, (req, res, next) => {
       res.status(404);
     });
 });
-
 module.exports = router;
