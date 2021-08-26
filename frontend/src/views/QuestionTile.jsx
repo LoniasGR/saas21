@@ -13,7 +13,8 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     maxWidth: 300,
-    minHeight: 200,
+    minHeight: 230,
+    maxHeight: 230,
 
   },
   cardContent: {
