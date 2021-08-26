@@ -49,7 +49,7 @@ function getUserQuestions(questions) {
         keywords,
       });
     })
-    .catch((err) => console.error(err))));
+    .catch((err) => console.error(err.status))));
 }
 
 module.exports.authMiddleware = authMiddleware;
