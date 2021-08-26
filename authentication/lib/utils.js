@@ -1,15 +1,8 @@
 const crypto = require('crypto');
 const jsonwebtoken = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 
 const { User } = require('../models/User');
-
-const pathToPrivKey = path.join(__dirname, '..', 'id_rsa_priv.pem');
-const PRIV_KEY = fs.readFileSync(pathToPrivKey, 'utf8');
-const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
-
+const { PRIV_KEY, PUB_KEY } = require('./constants');
 /**
  *
  * @param {*} password - The plain text password
@@ -103,7 +96,7 @@ function authMiddleware(req, res, next) {
       req.jwt = verification;
       next();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(401).json({ success: false, msg: 'Unauthorized access' });
     }
   } else {

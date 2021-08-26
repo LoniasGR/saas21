@@ -1,12 +1,7 @@
 const jsonwebtoken = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 const axios = require('axios');
 
-const { baseUrl } = require('../config/constants');
-
-const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
+const { baseUrl, PUB_KEY } = require('./constants');
 
 /**
  * @param {*} req - The HTTP request.

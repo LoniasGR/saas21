@@ -24,15 +24,14 @@ services:
             PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
      
     redis:
-        build:
-            context: .
-            dockerfile: Dockerfile.redis
+        image: redis:latest
+        command: redis-server --appendonly yes 
         container_name: redis
         restart: always
         ports:
             - "6379:6379"
         volumes:
-            - ../redis:/data
+            - ../redis/data:/data
 
     authentication:
         build: 
