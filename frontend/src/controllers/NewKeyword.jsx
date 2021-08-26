@@ -31,7 +31,6 @@ class NewKeyword extends React.Component {
         handleAddNewKeyword();
       })
       .catch((err) => {
-        console.error(err.response);
         if (err.response.data.msg === `${name} already exists`) { this.setState({ duplicateName: true }); }
       });
   }
