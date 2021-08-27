@@ -67,8 +67,17 @@ function Routes(props) {
           )}
         />
         )}
-      <Route path="/question" component={QuestionPage} />
-      <Route component={NotFound} />
+      {redirect
+      && (
+      <Route path="/question">
+        <QuestionPage
+          loggedIn={loggedIn}
+          token={token}
+        />
+      </Route>
+      )}
+      {redirect
+      && (<Route component={NotFound} />)}
     </Switch>
   );
 }

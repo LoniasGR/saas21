@@ -38,11 +38,11 @@ function Profile(props) {
         <Typography variant="h2" align="center">{`${firstName} ${lastName} (${username})`}</Typography>
         <Divider />
       </Grid>
-      <Grid item container direction="column" xs spacing={2}>
+      <Grid item container direction="column" xs spacing={3}>
         <Grid item>
           <Typography className={classes.bottomTypography} variant="h3">My questions</Typography>
         </Grid>
-        <Grid item container xs>
+        <Grid item container xs spacing={3}>
           {questions.map((question) => (
             <Grid item xs={4} key={question.id}>
               <Question
@@ -60,7 +60,7 @@ function Profile(props) {
         <Grid item>
           <Typography className={classes.bottomTypography} variant="h3">My answers</Typography>
         </Grid>
-        <Grid item container xs>
+        <Grid item container xs spacing={3}>
           {answers.map((answer) => (
             <Grid item xs={4} key={answer.id}>
               <Answer
