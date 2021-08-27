@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 import QuestionView from '../views/QuestionTile';
 import { keywordsAPIUrl, questionsAPIUrl } from '../lib/constants';
@@ -15,6 +16,7 @@ class Question extends React.Component {
       askedBy,
       keywords: [],
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +34,12 @@ class Question extends React.Component {
       .catch((err) => console.error(err));
   }
 
+  handleClick(event) {
+    event.preventDefault();
+    const { id, history } = this.props;
+    history.push(`/question/?id=${id}`);
+  }
+
   render() {
     const {
       title, description, keywords, askedBy,
@@ -43,6 +51,7 @@ class Question extends React.Component {
           description={description}
           keywords={keywords}
           askedBy={askedBy}
+          handleClick={this.handleClick}
         />
       </div>
     );
@@ -54,6 +63,9 @@ Question.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   askedBy: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default Question;
+export default withRouter(Question);

@@ -6,7 +6,7 @@ import Footer from './controllers/Footer';
 import Header from './controllers/Header';
 import Routes from './controllers/Routes';
 
-import verifyToken from './lib/utils';
+import { verifyToken } from './lib/utils';
 
 class App extends React.Component {
   constructor() {

@@ -10,6 +10,7 @@ import Register from './Register';
 import NewQuestion from './NewQuestion';
 import Profile from './Profile';
 import NotFound from './NotFound';
+import QuestionPage from './QuestionPage';
 
 function Routes(props) {
   const {
@@ -66,6 +67,7 @@ function Routes(props) {
           )}
         />
         )}
+      <Route path="/question" component={QuestionPage} />
       <Route component={NotFound} />
     </Switch>
   );

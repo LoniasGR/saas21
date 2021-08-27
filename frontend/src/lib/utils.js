@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { authAPIUrl } from './constants';
+import { authAPIUrl, answersAPIUrl } from './constants';
 
-export default function verifyToken(token) {
+export async function verifyToken(token) {
   return axios.get(`${authAPIUrl}/verify`, {
     headers: {
       Authorization: `${token}`,
@@ -19,4 +19,14 @@ export default function verifyToken(token) {
       console.debug(err.response);
       return { username: null, newToken: null };
     });
+}
+
+export async function getAnswersOfQuestion(questionId) {
+  return axios.get(`${answersAPIUrl}/of/${questionId}`)
+    .then((response) => response.data.answers.map((answer) => ({
+      id: answer.id,
+      text: answer.text,
+      answerBy: answer.answerBy,
+    })))
+    .catch((err) => console.error(err));
 }

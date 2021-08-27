@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 function Answer(props) {
   const {
-    questionTitle, text, askedBy, keywords,
+    questionTitle, text, askedBy, keywords, handleClick,
   } = props;
   const classes = useStyles();
 
@@ -51,7 +51,7 @@ function Answer(props) {
         ))}
       </CardContent>
       <CardActions>
-        <Button size="small">View question</Button>
+        <Button size="small" onClick={handleClick}>View question</Button>
       </CardActions>
 
     </Card>
@@ -63,6 +63,7 @@ Answer.propTypes = {
   questionTitle: PropTypes.string.isRequired,
   keywords: PropTypes.arrayOf(PropTypes.string),
   askedBy: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 Answer.defaultProps = {
