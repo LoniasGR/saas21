@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     marginTop: '5%',
     marginLeft: '25%',
     paddingBottom: '6%',
+    minHeight: '100vh',
 
   },
   gridItem: {
