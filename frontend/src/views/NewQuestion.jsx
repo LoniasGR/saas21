@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    minHeight: '100vh',
   },
   textField: {
     marginLeft: theme.spacing(1),

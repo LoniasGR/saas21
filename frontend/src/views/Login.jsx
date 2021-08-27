@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     margin: '1em',
+    minHeight: '100vh',
   },
   textField: {
     marginLeft: theme.spacing(1),

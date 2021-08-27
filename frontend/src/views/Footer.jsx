@@ -4,11 +4,6 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
-    position: 'fixed',
-    width: '100%',
-    height: '6%',
-    bottom: 0,
     color: 'white',
     backgroundColor: '#3f51b5',
   },

@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import Footer from './controllers/Footer';
-import Header from './controllers/Header';
-import Routes from './controllers/Routes';
+import AppView from '../views/App';
 
-import { verifyToken } from './lib/utils';
+import { verifyToken } from '../lib/utils';
 
 class App extends React.Component {
   constructor() {
@@ -82,20 +80,14 @@ class App extends React.Component {
       loggedIn, username, token, redirect,
     } = this.state;
     return (
-      <div>
-        <Header
-          loggedIn={loggedIn}
-          username={username}
-          handleSignOut={this.handleSignOut}
-        />
-        <Routes
-          redirect={redirect}
-          token={token}
-          loggedIn={loggedIn}
-          handleLoggedIn={this.handleLoggedIn}
-        />
-        <Footer />
-      </div>
+      <AppView
+        loggedIn={loggedIn}
+        username={username}
+        token={token}
+        redirect={redirect}
+        handleSignOut={this.handleSignOut}
+        handleLoggedIn={this.handleLoggedIn}
+      />
     );
   }
 }

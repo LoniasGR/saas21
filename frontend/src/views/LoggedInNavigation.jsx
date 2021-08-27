@@ -12,10 +12,6 @@ import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: '100%',
-  },
   navItem: {
     marginRight: theme.spacing(2),
     color: 'white',
@@ -37,23 +33,21 @@ function LoggedInNav(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Grid container justifyContent="space-between" spacing={10}>
-            <Grid item>
-              <Button color="inherit" className={clsx(classes.navItem, classes.navButton)} component={RouterLink} to="/" underline="none">Home</Button>
-            </Grid>
-            <Grid item>
-              <Typography className={clsx(classes.navItem)} variant="inherit">{`Welcome, ${userName}`}</Typography>
-              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/profile" underline="none">Profile</Button>
-              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/ask-question" underline="none">Ask a Question</Button>
-              <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" replace onClick={handleSignOut} underline="none">Sign Out</Button>
-            </Grid>
+    <AppBar>
+      <Toolbar>
+        <Grid container justifyContent="space-between" spacing={10}>
+          <Grid item>
+            <Button color="inherit" className={clsx(classes.navItem, classes.navButton)} component={RouterLink} to="/" underline="none">Home</Button>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
+          <Grid item>
+            <Typography className={clsx(classes.navItem)} variant="inherit">{`Welcome, ${userName}`}</Typography>
+            <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/profile" underline="none">Profile</Button>
+            <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/ask-question" underline="none">Ask a Question</Button>
+            <Button color="inherit" className={clsx(classes.navItem, classes.rightSide, classes.navButton)} component={RouterLink} to="/" replace onClick={handleSignOut} underline="none">Sign Out</Button>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }
 

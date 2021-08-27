@@ -10,7 +10,8 @@ import logo from '../images/logo.png';
 
 const useStyles = makeStyles(() => ({
   root: {
-    paddingBottom: '6%',
+    height: '100%',
+    minHeight: '100vh',
   },
   image: {
     display: 'block',

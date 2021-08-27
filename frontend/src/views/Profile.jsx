@@ -11,7 +11,7 @@ import Answer from '../controllers/AnswerTile';
 
 const useStyles = makeStyles({
   root: {
-    margin: 'auto',
+    margin: '3% auto',
   },
   topPart: {
     margin: '3% auto',
@@ -33,18 +33,18 @@ function Profile(props) {
   } = props;
   const classes = useStyles();
   return (
-    <Grid container>
-      <Grid item xs={12} className={classes.topPart}>
+    <Grid container className={classes.root}>
+      <Grid item xl={12} md={12} sm={12} lg={12} xs={12} className={classes.topPart}>
         <Typography variant="h2" align="center">{`${firstName} ${lastName} (${username})`}</Typography>
         <Divider />
       </Grid>
-      <Grid item container direction="column" xs spacing={3}>
+      <Grid item container direction="column" xs xl md sm lg spacing={3}>
         <Grid item>
           <Typography className={classes.bottomTypography} variant="h3">My questions</Typography>
         </Grid>
-        <Grid item container xs spacing={3}>
+        <Grid item container xs md sm lg xl spacing={3}>
           {questions.map((question) => (
-            <Grid item xs={4} key={question.id}>
+            <Grid item xs={4} md lg={5} sm xl={4} key={question.id}>
               <Question
                 key={question.id}
                 id={question.id}
@@ -62,7 +62,7 @@ function Profile(props) {
         </Grid>
         <Grid item container xs spacing={3}>
           {answers.map((answer) => (
-            <Grid item xs={4} key={answer.id}>
+            <Grid item xs={4} md lg={5} sm xl={4} key={answer.id}>
               <Answer
                 key={answer.id}
                 answerOf={answer.answerOf}

@@ -11,8 +11,10 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '1%',
+    marginTop: '5%',
     marginLeft: '25%',
+    paddingBottom: '6%',
+
   },
   gridItem: {
     alignItems: 'center',
@@ -130,7 +132,9 @@ function QuestionPage(props) {
           </div>
         )
           : (
-            <Typography>Register or Login to answer.</Typography>
+            <Grid item>
+              <Typography variant="h5">Register or Login to answer.</Typography>
+            </Grid>
           )}
       </Grid>
     </div>
