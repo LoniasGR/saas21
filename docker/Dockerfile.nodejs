@@ -1,5 +1,4 @@
-FROM node:14
-
+FROM node:16
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -20,4 +19,4 @@ COPY . .
 # TODO: Pick port
 EXPOSE 8080
 
-CMD [ "npm", "run" ]
+CMD [ "npm", "start" ]
