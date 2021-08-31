@@ -21,16 +21,16 @@ do
     esac
 done
 
+if [ $down ]; then 
+    docker-compose -f docker/docker-compose.yml -f microservices/docker/docker-compose.override.yml down
+fi
+
 if [ $build ]; then 
     docker-compose -f docker/docker-compose.yml -f microservices/docker/docker-compose.override.yml build
 fi 
 
 if [ $up ]; then 
     docker-compose -f docker/docker-compose.yml -f microservices/docker/docker-compose.override.yml up -d
-fi
-
-if [ $down ]; then 
-    docker-compose -f docker/docker-compose.yml -f microservices/docker/docker-compose.override.yml down
 fi
 
 if [ $logs ]; then 

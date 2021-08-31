@@ -39,7 +39,9 @@ function Landing(props) {
     <div className={classes.root}>
       <img src={logo} className={classes.image} alt="AMA logo" />
       {
-        (questions.length === 0) ? <NoQuestions /> : <QuestionsFrontPage questions={questions} />
+        (questions === null || questions.length === 0)
+          ? <NoQuestions />
+          : <QuestionsFrontPage questions={questions} />
       }
     </div>
   );
