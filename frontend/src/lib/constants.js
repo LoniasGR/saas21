@@ -1,4 +1,11 @@
-const baseUrl = 'https://microservices.lavdelas.me';
+let baseUrl;
+
+if (process.env.BACKEND_TYPE === 'microservices') {
+  baseUrl = 'https://microservices.lavdelas.me';
+} else if (process.env.BACKEND_TYPE === 'SOA') {
+  baseUrl = 'https://soa.lavdelas.me';
+}
+
 const APIUrl = `${baseUrl}/api`;
 const questionsAPIUrl = `${APIUrl}/questions`;
 const keywordsAPIUrl = `${APIUrl}/keywords`;

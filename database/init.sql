@@ -1,3 +1,5 @@
+-- Microservices databases
+
 CREATE DATABASE auth;
 GRANT ALL PRIVILEGES ON DATABASE auth TO postgres;
 
@@ -12,3 +14,9 @@ GRANT ALL PRIVILEGES ON DATABASE keywords TO postgres;
 
 CREATE DATABASE answers;
 GRANT ALL PRIVILEGES ON DATABASE answers TO postgres;
+
+-- SOA database
+
+CREATE DATABASE soa;
+GRANT ALL PRIVILEGES ON DATABASE soa TO postgres;
+
