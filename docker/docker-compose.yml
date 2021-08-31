@@ -1,18 +1,155 @@
 version: "3.9"
 services:
     db:
-        image: postgres
+        build:
+            context: ../database
+            dockerfile: ../docker/Dockerfile.pg 
+        container_name: database
         restart: always
         volumes: 
             - ../db:/var/lib/postgresql/data
         environment: 
             POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    
     pgadmin: 
         image: dpage/pgadmin4
+        container_name: pgadmin
         restart: always 
+        depends_on: 
+            - db
         ports:
             - "5050:80"
         environment: 
             PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
-            PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}" 
+            PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+     
+    redis:
+        image: redis:latest
+        command: redis-server --appendonly yes 
+        container_name: redis
+        restart: always
+        ports:
+            - "6379:6379"
+        volumes:
+            - ../redis/data:/data
+
+    authentication:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../authentication
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.authentication
+        container_name: ms_auth
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports:
+            - "5000:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_HOST: "db" 
+            DB_NAME: "auth"
+            REDIS_HOST: "redis"  
+    
+    userprofile:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../user-profile
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.userProfile
+        container_name: ms_user_profile
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5001:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "user_profile"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"     
+    
+    questions:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../questions
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.questions
+        container_name: ms_questions
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5002:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "questions"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"  
+        
+    keywords:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../keywords
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.keywords
+        container_name: ms_keywords
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5003:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "keywords"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"    
+
+    answers:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../answers
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.answers
+        container_name: ms_answers
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "5004:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "questions"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"      
+            
+    frontend:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../frontend
+            # Dockerfile path is relative to link
+            dockerfile: ../docker/Dockerfile.frontend
+        container_name: ms_frontend
+        restart: always
+        ports: 
+            - "4999:80"
+        depends_on: 
+        - authentication
+        - userprofile
+        - questions
+        - answers
+        - keywords
+
+
+
 

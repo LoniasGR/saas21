@@ -1,4 +1,7 @@
+# IMPORTANT: Copy to every node folder that will be on a context
+
 # Don't copy these folders/files when building a container
+
 
 node_modules
 npm-debug.log
