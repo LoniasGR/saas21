@@ -1,0 +1,15 @@
+version: "3.9"
+services:    
+    frontend:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../frontend
+            dockerfile:  ../docker/Dockerfile.frontend
+            args:
+                REACT_APP_BACKEND_TYPE: "soa"
+        container_name: soa_frontend
+        restart: always
+        ports: 
+            - "4999:80"
+
+
