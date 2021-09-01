@@ -1,0 +1,65 @@
+# HTTP
+server {
+
+  listen 80;
+  listen [::]:80;
+
+  server_name soa.lavdelas.me;
+
+  if ($host = soa.lavdelas.me) {
+    return 301 https://$host$request_uri;
+  }
+}
+
+# HTTPS
+server {
+  listen [::]:443 ssl;
+  listen 443 ssl;
+
+  server_name soa.lavdelas.me;
+
+  ssl_certificate /etc/letsencrypt/live/lavdelas.me/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/lavdelas.me/privkey.pem; # managed by Certbot
+  include /etc/letsencrypt/options-ssl-nginx.conf;
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+
+  location / {
+    proxy_pass http://127.0.0.1:6999;
+  }
+
+  # Source https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-1/
+
+  location = /api/auth/login {
+    proxy_pass http://127.0.0.1:7000;
+  }
+
+  location = /api/auth/register {
+    proxy_pass http://127.0.0.1:7000;
+  }
+
+  location = /api/auth/verify {
+    proxy_pass http://127.0.0.1:7000;
+  }
+
+  location = /api/profile/ {
+    proxy_pass http://127.0.0.1:7001;
+  }
+
+    location ^~ /api/users {
+    proxy_pass http://127.0.0.1:7001;
+  }
+
+  location ^~ /api/questions/ {
+    proxy_pass http://127.0.0.1:7002;
+  }
+
+  location ^~ /api/keywords/ {
+    proxy_pass http://127.0.0.1:7003;
+  }
+
+  location ^~ /api/answers/ {
+    proxy_pass http://127.0.0.1:7004;
+  }
+
+}

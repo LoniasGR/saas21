@@ -101,8 +101,13 @@ services:
             REDIS_HOST: "redis"      
             
     frontend:
-        environment: 
-          BACKEND_TYPE: "microservices"
-
-
-
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../frontend
+            dockerfile:  ../docker/Dockerfile.frontend
+            args:
+                REACT_APP_BACKEND_TYPE: "microservices"
+        container_name: ms_frontend
+        restart: always
+        ports: 
+            - "4999:80"

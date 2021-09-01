@@ -1,0 +1,44 @@
+# HTTP
+server {
+
+  listen 80;
+  listen [::]:80;
+
+  server_name saas.lavdelas.me;
+
+  if ($host = saas.lavdelas.me) {
+    return 301 https://$host$request_uri;
+  }  
+
+
+}
+
+# HTTPS
+server {
+  listen [::]:443 ssl;
+  listen 443 ssl;
+
+  root /var/www/saas.lavdelas.me/html;
+  index index.html index.htm index.php;
+
+  server_name saas.lavdelas.me;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+    ssl_certificate /etc/letsencrypt/live/lavdelas.me/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/lavdelas.me/privkey.pem; # managed by Certbot
+
+  include /etc/letsencrypt/options-ssl-nginx.conf;
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+  client_max_body_size 20M;
+
+  location /pgadmin4/ {
+    proxy_set_header X-Script-Name /pgadmin4;
+    proxy_set_header X-Scheme $scheme;
+    proxy_set_header Host $host;
+    proxy_pass http://localhost:5050/;
+    proxy_redirect off;
+  }
+}
