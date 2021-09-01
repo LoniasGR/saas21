@@ -7,16 +7,22 @@ const redisOpts = {
   host: redisHost,
   port: redisPort,
 };
-const KeywordPublisher = redis.createClient(redisOpts);
-const QuestionSubscriber = redis.createClient(redisOpts);
+const KeywordProducer = redis.createClient(redisOpts);
+const QuestionConsumer = redis.createClient(redisOpts);
+const PositionLogger = redis.createClient(redisOpts);
 
-KeywordPublisher.on('ready', () => {
-  console.debug('KeywordPublisher: Connected to Redis server successfully.');
+KeywordProducer.on('ready', () => {
+  console.debug('KeywordProducer: Connected to Redis server successfully.');
 });
 
-QuestionSubscriber.on('ready', () => {
-  console.debug('QuestionSubscriber: Connected to Redis server successfully.');
+QuestionConsumer.on('ready', () => {
+  console.debug('QuestionConsumer: Connected to Redis server successfully.');
 });
 
-module.exports.KeywordPublisher = KeywordPublisher;
-module.exports.QuestionSubscriber = QuestionSubscriber;
+PositionLogger.on('ready', () => {
+  console.debug('PositionLogger: Connected to Redis server successfully.');
+});
+
+module.exports.KeywordProducer = KeywordProducer;
+module.exports.QuestionConsumer = QuestionConsumer;
+module.exports.PositionLogger = PositionLogger;

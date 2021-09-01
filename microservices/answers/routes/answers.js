@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { publishAnswer } = require('../controllers/AnswerPublisher');
+const { produceAnswer } = require('../controllers/AnswerProducer');
 const { buildAnswer } = require('../controllers/AnswerController');
 const { Answer } = require('../models/Answer');
 const utils = require('../lib/utils');
@@ -76,7 +76,7 @@ router.post('/new', utils.authMiddleware, (req, res, next) => {
           const newAnswer = buildAnswer(req.body.questionId, username, req.body.text);
           newAnswer.save()
             .then((answer) => {
-              publishAnswer(answer);
+              produceAnswer(answer);
               res.status(200).json({ success: true, answerId: answer.id });
             });
         }

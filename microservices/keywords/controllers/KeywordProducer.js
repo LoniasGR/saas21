@@ -1,4 +1,4 @@
-const { KeywordPublisher } = require('../config/redis');
+const { KeywordProducer } = require('../config/redis');
 
 async function publishKeyword(keyword) {
   console.debug(`Publishing keyword with name: ${keyword.name}`);
@@ -8,7 +8,11 @@ async function publishKeyword(keyword) {
     description: keyword.description,
   };
   console.debug(keywordData);
-  KeywordPublisher.publish('Keywords', JSON.stringify(keywordData));
+  KeywordProducer.xadd('Keywords', '*',
+    'Keyword', JSON.stringify(keywordData),
+    (err) => {
+      if (err) console.error(err);
+    });
 }
 
 module.exports.publishKeyword = publishKeyword;
