@@ -1,5 +1,11 @@
 # Team SAAS33 | SAAS NTUA 2021
 
+## Architecture description
+
+### Microservices
+
+The microservices infrastructure is based on asynchronous HTTP calls for the most part. Whenever a service requires data, it asks other services by hitting the corresponding endpoints. When a service produces data, like when a new user is created, then this data is published on redis, where they are consumed through the redis streams data structure. 
+
 ## Instructions
 
 1) Run the `createKeys.sh` script to create a private and a public key.
