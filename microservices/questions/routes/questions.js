@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { publishQuestion } = require('../controllers/QuestionPublisher');
+const { produceQuestion } = require('../controllers/QuestionProducer');
 const { buildQuestion } = require('../controllers/QuestionController');
 const { addQuestionKeywords } = require('../controllers/QuestionKeywordController');
 const { Question } = require('../models/Question');
@@ -74,7 +74,7 @@ router.post('/new', utils.authMiddleware, (req, res, next) => {
         newQuestion.save()
           .then((question) => {
             addQuestionKeywords(question.id, keywords);
-            publishQuestion(question, keywords);
+            produceQuestion(question, keywords);
             res.json({
               success: true,
               question_id: question.id,

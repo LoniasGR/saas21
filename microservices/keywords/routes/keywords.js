@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { buildKeyword, keywordAlreadyExists } = require('../controllers/KeywordController');
-const { publishKeyword } = require('../controllers/KeywordPublisher');
+const { publishKeyword } = require('../controllers/KeywordProducer');
 const utils = require('../lib/utils');
 const { Keyword } = require('../models/Keyword');
 

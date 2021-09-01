@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const utils = require('../lib/utils');
-const { publishUser } = require('../controllers/UserPublisher');
+const { produceUser } = require('../controllers/UserProducer');
 const { buildUser } = require('../controllers/UserController');
 const { User } = require('../models/User');
 
@@ -43,7 +43,7 @@ router.post('/register', (req, res, next) => {
         const newUser = buildUser(req.body, hash, salt);
         newUser.save()
           .then((user) => {
-            publishUser(user);
+            produceUser(user);
             const jwt = utils.issueJWT(user.username);
             res.json({
               success: true,

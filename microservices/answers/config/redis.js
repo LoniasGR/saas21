@@ -7,10 +7,10 @@ const redisOpts = {
   host: redisHost,
   port: redisPort,
 };
-const AnswerPublisher = redis.createClient(redisOpts);
+const AnswerProducer = redis.createClient(redisOpts);
 
-AnswerPublisher.on('ready', () => {
-  console.debug('QuestionPublisher: Connected to Redis server successfully.');
+AnswerProducer.on('ready', () => {
+  console.debug('AnswerProducer: Connected to Redis server successfully.');
 });
 
-module.exports.AnswerPublisher = AnswerPublisher;
+module.exports.AnswerProducer = AnswerProducer;

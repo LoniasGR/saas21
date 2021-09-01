@@ -7,22 +7,28 @@ const redisOpts = {
   host: redisHost,
   port: redisPort,
 };
-const UserSubscriber = redis.createClient(redisOpts);
-const QuestionSubscriber = redis.createClient(redisOpts);
-const AnswerSubscriber = redis.createClient(redisOpts);
+const UserConsumer = redis.createClient(redisOpts);
+const QuestionConsumer = redis.createClient(redisOpts);
+const AnswerConsumer = redis.createClient(redisOpts);
+const PositionLogger = redis.createClient(redisOpts);
 
-UserSubscriber.on('ready', () => {
-  console.debug('Connected to Redis server successfully.');
+UserConsumer.on('ready', () => {
+  console.debug('UserConsumer: Connected to Redis server successfully.');
 });
 
-QuestionSubscriber.on('ready', () => {
-  console.debug('QuestionSubscriber: Connected to Redis server successfully.');
+QuestionConsumer.on('ready', () => {
+  console.debug('QuestionConsumer: Connected to Redis server successfully.');
 });
 
-AnswerSubscriber.on('ready', () => {
-  console.debug('AnswerSubscriber: Connected to Redis server successfully.');
+AnswerConsumer.on('ready', () => {
+  console.debug('AnswerConsumer: Connected to Redis server successfully.');
 });
 
-module.exports.UserSubscriber = UserSubscriber;
-module.exports.QuestionSubscriber = QuestionSubscriber;
-module.exports.AnswerSubscriber = AnswerSubscriber;
+PositionLogger.on('ready', () => {
+  console.debug('PositionLogger: Connected to Redis server successfully.');
+});
+
+module.exports.UserConsumer = UserConsumer;
+module.exports.QuestionConsumer = QuestionConsumer;
+module.exports.AnswerConsumer = AnswerConsumer;
+module.exports.PositionLogger = PositionLogger;
