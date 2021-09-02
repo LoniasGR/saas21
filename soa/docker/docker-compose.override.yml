@@ -1,6 +1,6 @@
 version: "3.9"
 services:    
-    frontend:
+    soa_frontend:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../frontend
@@ -10,6 +10,104 @@ services:
         container_name: soa_frontend
         restart: always
         ports: 
-            - "4999:80"
+            - "6999:80"
 
+    soa_authentication:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../soa/authentication
+            # Dockerfile path is relative to link
+            dockerfile: ../../docker/Dockerfile.nodejs
+        container_name: soa_auth
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports:
+            - "7000:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_HOST: "db" 
+            DB_NAME: "soa"
+            REDIS_HOST: "redis"  
+    
+    soa_userprofile:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../soa/user-profile
+            # Dockerfile path is relative to link
+            dockerfile: ../../docker/Dockerfile.nodejs
+        container_name: soa_user_profile
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "7001:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "soa"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"     
+    
+    soa_questions:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../soa/questions
+            # Dockerfile path is relative to link
+            dockerfile: ../../docker/Dockerfile.nodejs
+        container_name: soa_questions
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "7002:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "soa"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"  
+        
+    soa_keywords:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../soa/keywords
+            # Dockerfile path is relative to link
+            dockerfile: ../../docker/Dockerfile.nodejs
+        container_name: soa_keywords
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "7003:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "soa"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"    
 
+    soa_answers:
+        build: 
+            # Context path is relative to docker-compose file (I guess)
+            context: ../soa/answers
+            # Dockerfile path is relative to link
+            dockerfile: ../../docker/Dockerfile.nodejs
+        container_name: soa_answers
+        depends_on: 
+            - db
+            - redis
+        restart: always
+        ports: 
+            - "7004:3000"
+        environment: 
+            NODE_ENV: "production"
+            DB_PASS: "${POSTGRES_PASSWORD}"
+            DB_NAME: "soa"
+            DB_HOST: "db"
+            REDIS_HOST: "redis"      
