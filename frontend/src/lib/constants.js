@@ -1,8 +1,8 @@
 let baseUrl;
 
-if (process.env.BACKEND_TYPE === 'microservices') {
+if (process.env.REACT_APP_BACKEND_TYPE === 'microservices') {
   baseUrl = 'https://microservices.lavdelas.me';
-} else if (process.env.BACKEND_TYPE === 'SOA') {
+} else if (process.env.REACT_APP_BACKEND_TYPE === 'soa') {
   baseUrl = 'https://soa.lavdelas.me';
 } else {
   baseUrl = 'https://microservices.lavdelas.me';
