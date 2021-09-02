@@ -1,5 +1,4 @@
 const { Keyword } = require('../models/Keyword');
-const utils = require('../lib/utils');
 
 function buildKeyword(data) {
   const newKeyword = Keyword.build(
