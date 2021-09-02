@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-    authentication:
+    ms_authentication:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../microservices/authentication
             # Dockerfile path is relative to link
-            dockerfile: ../docker/Dockerfile.authentication
+            dockerfile: ../../docker/Dockerfile.nodejs
         container_name: ms_auth
         depends_on: 
             - db
@@ -20,12 +20,12 @@ services:
             DB_NAME: "auth"
             REDIS_HOST: "redis"  
     
-    userprofile:
+    ms_userprofile:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../microservices/user-profile
             # Dockerfile path is relative to link
-            dockerfile: ../docker/Dockerfile.userProfile
+            dockerfile: ../../docker/Dockerfile.nodejs
         container_name: ms_user_profile
         depends_on: 
             - db
@@ -40,12 +40,12 @@ services:
             DB_HOST: "db"
             REDIS_HOST: "redis"     
     
-    questions:
+    ms_questions:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../microservices/questions
             # Dockerfile path is relative to link
-            dockerfile: ../docker/Dockerfile.questions
+            dockerfile: ../../docker/Dockerfile.nodejs
         container_name: ms_questions
         depends_on: 
             - db
@@ -60,12 +60,12 @@ services:
             DB_HOST: "db"
             REDIS_HOST: "redis"  
         
-    keywords:
+    ms_keywords:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../microservices/keywords
             # Dockerfile path is relative to link
-            dockerfile: ../docker/Dockerfile.keywords
+            dockerfile: ../../docker/Dockerfile.nodejs
         container_name: ms_keywords
         depends_on: 
             - db
@@ -80,12 +80,12 @@ services:
             DB_HOST: "db"
             REDIS_HOST: "redis"    
 
-    answers:
+    ms_answers:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../microservices/answers
             # Dockerfile path is relative to link
-            dockerfile: ../docker/Dockerfile.answers
+            dockerfile: ../../docker/Dockerfile.nodejs
         container_name: ms_answers
         depends_on: 
             - db
@@ -100,7 +100,7 @@ services:
             DB_HOST: "db"
             REDIS_HOST: "redis"      
             
-    frontend:
+    ms_frontend:
         build: 
             # Context path is relative to docker-compose file (I guess)
             context: ../frontend
